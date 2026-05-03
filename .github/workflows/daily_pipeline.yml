@@ -15,17 +15,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build item ID matrix
-        id: set-matrix
-        run: |
-          # Extract just the IDs as a JSON array e.g. [12934, 536, 565, ...]
-          MATRIX=$(cat tracked_items.json | python3 -c "
-          import json, sys
-          items = json.load(sys.stdin)
-          print(json.dumps([i['id'] for i in items]))
-          ")
-          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
-          echo "Matrix: $MATRIX"
+      - name: Generate matrix
+      id: set-matrix
+      run: |
+        MATRIX=$(python3 -c "
+        import json
+        with open('tracked_items.json') as f:
+        items = json.load(f)
+        print(json.dumps(items))
+        ")
+        echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+        echo "Matrix: $MATRIX"
 
   # ── Job 2: Run pipeline for each item in parallel ───────────────────────────
   run-pipeline:
