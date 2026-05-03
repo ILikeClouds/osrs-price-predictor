@@ -1,0 +1,10 @@
+{
+  "max_depth": null,
+  "min_samples_split": 5,
+  "n_estimators": 50,
+  "item_id": 536,
+  "item_name": "Dragon bones",
+  "regime_start": "2026-01-24",
+  "regime_days": 91,
+  "use_global_model": false
+}
