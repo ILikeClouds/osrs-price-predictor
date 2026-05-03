@@ -90,6 +90,7 @@ if __name__ == "__main__":
         future_rel = pd.read_csv(rel_csv_path)
         X_future   = bundle['scaler'].transform(future_rel[RELATIVE_FEATURES])
         pred_pcts  = bundle['model'].predict(X_future)
+        # Global model predicts % return; convert back to absolute price
         future_predictions = np.round(anchor_prices * (1 + pred_pcts)).astype(int)
 
     # ── Tier 2 — Item-specific model ───────────────────────────────────────
@@ -106,8 +107,8 @@ if __name__ == "__main__":
         model.fit(X_train, y_train)
 
         X_future = future_abs.drop(columns=['target_price_7d', 'date', 'daily_avg_price_raw'])
-        pred_deltas        = model.predict(X_future)
-        future_predictions = np.round(pred_deltas + anchor_prices).astype(int)
+        # Item-specific model predicts absolute price directly — no anchor needed
+        future_predictions = np.round(model.predict(X_future)).astype(int)
 
     # ── Print forecast ─────────────────────────────────────────────────────
     print(f"\n=== 7-DAY FORECAST: {item_name.upper()} [{tier_label} model] ===")
@@ -138,7 +139,7 @@ if __name__ == "__main__":
     pred_prices = [last_price] + future_predictions.tolist()
 
     # ── Write prediction JSON for GitHub Pages ─────────────────────────────
-    now_utc    = datetime.now(timezone.utc)
+    now_utc     = datetime.now(timezone.utc)
     stale_after = (now_utc + timedelta(hours=29)).strftime('%Y-%m-%dT%H:%M:%SZ')
 
     prediction_doc = {
