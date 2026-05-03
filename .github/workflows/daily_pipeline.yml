@@ -54,13 +54,14 @@ jobs:
       - name: Forecast ${{ matrix.item }}
         run: python src/predict_trends.py
 
-      # Upload the prediction JSON — commit_output.py names it by item ID,
-      # so we just grab everything written to docs/predictions/
+      # Upload only the single fresh JSON this job produced.
+      # Writing to output/ (not docs/) means no stale files from the repo
+      # checkout get mixed in with this run's artifact.
       - name: Upload prediction artifact
         uses: actions/upload-artifact@v4
         with:
           name: prediction-${{ strategy.job-index }}
-          path: docs/predictions/
+          path: output/*.json
           retention-days: 2
 
       - name: Upload history artifact
@@ -88,6 +89,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      # Download all 16 fresh prediction JSONs into docs/predictions/
+      # Each artifact contains exactly one file so nothing gets stomped.
       - name: Download all prediction artifacts
         uses: actions/download-artifact@v4
         with:
