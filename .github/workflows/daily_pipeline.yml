@@ -21,7 +21,7 @@ jobs:
         MATRIX=$(python3 -c "
         import json
         with open('tracked_items.json') as f:
-        items = json.load(f)
+          items = json.load(f)
         print(json.dumps(items))
         ")
         echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
