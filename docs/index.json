@@ -1,19 +1,11 @@
 {
-  "generated_at": "2026-05-03T06:42:30Z",
-  "item_count": 16,
+  "generated_at": "2026-05-03T06:52:34Z",
+  "item_count": 15,
   "items": [
     {
       "id": 11804,
       "name": "Bandos godsword",
       "current_price": 19252069,
-      "model_tier": "Item-specific",
-      "generated_at": "2026-05-03T06:41:48Z",
-      "stale_after": "2026-05-04T11:41:48Z"
-    },
-    {
-      "id": 12695,
-      "name": "Super combat potion(4)",
-      "current_price": 13846,
       "model_tier": "Item-specific",
       "generated_at": "2026-05-03T06:41:48Z",
       "stale_after": "2026-05-04T11:41:48Z"
