@@ -7,7 +7,7 @@ on:
 
 jobs:
 
-  # ── Job 1: Build the item matrix from tracked_items.json ────────────────────
+  # ── Job 1: Build the item matrix from tracked_items.json ──────────────────
   generate-matrix:
     runs-on: ubuntu-latest
     outputs:
@@ -15,27 +15,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate matrix
-      id: set-matrix
-      run: |
-        MATRIX=$(python3 -c "
-        import json
-        with open('tracked_items.json') as f:
-          items = json.load(f)
-        print(json.dumps(items))
-        ")
-        echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
-        echo "Matrix: $MATRIX"
+      - name: Build item name matrix
+        id: set-matrix
+        run: |
+          MATRIX=$(python3 -c "
+          import json
+          with open('tracked_items.json') as f:
+              items = json.load(f)
+          print(json.dumps(items))
+          ")
+          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+          echo "Matrix: $MATRIX"
 
-  # ── Job 2: Run pipeline for each item in parallel ───────────────────────────
+  # ── Job 2: Run pipeline for each item in parallel ─────────────────────────
   run-pipeline:
     needs: generate-matrix
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        item_id: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
-      max-parallel: 8       # 8 items at a time keeps API load reasonable
-      fail-fast: false      # one item failing doesn't cancel the others
+        item: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+      max-parallel: 8     # 8 items at a time keeps API load reasonable
+      fail-fast: false    # one item failing doesn't cancel the others
 
     steps:
       - uses: actions/checkout@v4
@@ -48,31 +48,29 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # Restore this item's history CSV if it was committed previously
-      # (the checkout above already has it if it exists in the repo)
+      - name: Preprocess ${{ matrix.item }}
+        run: python src/preprocess.py --item-name "${{ matrix.item }}"
 
-      - name: Preprocess item ${{ matrix.item_id }}
-        run: python src/preprocess.py --item-id ${{ matrix.item_id }}
+      - name: Forecast ${{ matrix.item }}
+        run: python src/predict_trends.py
 
-      - name: Forecast item ${{ matrix.item_id }}
-        run: python src/predict_trends.py --item-id ${{ matrix.item_id }}
-
-      # Save prediction JSON and updated history CSV as artifacts
+      # Upload the prediction JSON — commit_output.py names it by item ID,
+      # so we just grab everything written to docs/predictions/
       - name: Upload prediction artifact
         uses: actions/upload-artifact@v4
         with:
-          name: prediction-${{ matrix.item_id }}
-          path: docs/predictions/${{ matrix.item_id }}.json
+          name: prediction-${{ strategy.job-index }}
+          path: docs/predictions/
           retention-days: 2
 
       - name: Upload history artifact
         uses: actions/upload-artifact@v4
         with:
-          name: history-${{ matrix.item_id }}
-          path: data/history/${{ matrix.item_id }}.csv
+          name: history-${{ strategy.job-index }}
+          path: data/history/
           retention-days: 2
 
-  # ── Job 3: Collect results, rebuild global model, commit ────────────────────
+  # ── Job 3: Collect results, rebuild global model, commit ──────────────────
   commit-results:
     needs: run-pipeline
     runs-on: ubuntu-latest
@@ -88,7 +86,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # Download all prediction JSONs → docs/predictions/
       - name: Download all prediction artifacts
         uses: actions/download-artifact@v4
         with:
@@ -96,7 +93,6 @@ jobs:
           path: docs/predictions/
           merge-multiple: true
 
-      # Download all history CSVs → data/history/
       - name: Download all history artifacts
         uses: actions/download-artifact@v4
         with:
@@ -104,21 +100,17 @@ jobs:
           path: data/history/
           merge-multiple: true
 
-      # Rebuild global model from combined histories
       - name: Build global model
         run: python src/build_global_model.py
 
-      # Generate docs/index.json
       - name: Generate index.json
         run: python src/commit_output.py
 
-      # Commit everything back to the repo
       - name: Commit and push
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/ data/history/ models/
-          # Only commit if there are actual changes
           git diff --staged --quiet && echo "No changes to commit" || (
             git commit -m "chore: daily predictions $(date -u +'%Y-%m-%d %H:%M UTC')"
             git push
