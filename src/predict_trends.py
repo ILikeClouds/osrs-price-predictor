@@ -6,8 +6,9 @@ Generates the 7-day price forecast using whichever model tier is appropriate:
   Global model    — when the item has < MIN_DAYS_FOR_ITEM_MODEL regime days
   Item-specific   — otherwise
 
-Writes the forecast to docs/predictions/{item_id}.json for GitHub Pages,
-and saves a chart to output/price_trend_forecast.png.
+Writes the forecast to output/{item_id}.json (picked up by the workflow
+and moved to docs/predictions/ in the commit-results job), and saves a
+chart to output/price_trend_forecast.png.
 """
 
 import pandas as pd
@@ -40,9 +41,7 @@ if __name__ == "__main__":
     data_dir     = os.path.join(project_root, 'data')
     models_dir   = os.path.join(project_root, 'models')
     output_dir   = os.path.join(project_root, 'output')
-    docs_dir     = os.path.join(project_root, 'docs', 'predictions')
     os.makedirs(output_dir, exist_ok=True)
-    os.makedirs(docs_dir,   exist_ok=True)
 
     # ── Load config ────────────────────────────────────────────────────────
     config_path = os.path.join(project_root, 'config.json')
@@ -74,7 +73,6 @@ if __name__ == "__main__":
     anchor_prices = future_abs['daily_avg_price_raw'].values
 
     # ── Tier 1 — Global model ──────────────────────────────────────────────
-    # Only attempt if the global model exists AND the relative feature CSV exists
     rel_csv_path     = os.path.join(data_dir, 'future_inference_rel.csv')
     bundle_path      = os.path.join(models_dir, 'global_model.pkl')
     global_available = os.path.exists(bundle_path) and os.path.exists(rel_csv_path)
@@ -138,7 +136,10 @@ if __name__ == "__main__":
     pred_dates  = [last_date] + future_dates.tolist()
     pred_prices = [last_price] + future_predictions.tolist()
 
-    # ── Write prediction JSON for GitHub Pages ─────────────────────────────
+    # ── Write prediction JSON to output/ ───────────────────────────────────
+    # The workflow uploads output/*.json as an artifact and the commit-results
+    # job downloads everything into docs/predictions/ — one fresh file per job,
+    # no stale files from the repo checkout get mixed in.
     now_utc     = datetime.now(timezone.utc)
     stale_after = (now_utc + timedelta(hours=29)).strftime('%Y-%m-%dT%H:%M:%SZ')
 
@@ -161,7 +162,7 @@ if __name__ == "__main__":
         ],
     }
 
-    json_path = os.path.join(docs_dir, f"{item_id}.json")
+    json_path = os.path.join(output_dir, f"{item_id}.json")
     with open(json_path, 'w') as f:
         json.dump(prediction_doc, f, indent=2)
     print(f"Prediction JSON saved → {json_path}")
