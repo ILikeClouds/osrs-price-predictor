@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-05-03T06:52:34Z",
-  "item_count": 15,
+  "generated_at": "2026-05-03T07:01:12Z",
+  "item_count": 16,
   "items": [
     {
       "id": 11804,
@@ -9,6 +9,14 @@
       "model_tier": "Item-specific",
       "generated_at": "2026-05-03T06:41:48Z",
       "stale_after": "2026-05-04T11:41:48Z"
+    },
+    {
+      "id": 12695,
+      "name": "Super combat potion(4)",
+      "current_price": 13846,
+      "model_tier": "Item-specific",
+      "generated_at": "2026-05-03T07:00:31Z",
+      "stale_after": "2026-05-04T12:00:31Z"
     },
     {
       "id": 12934,
