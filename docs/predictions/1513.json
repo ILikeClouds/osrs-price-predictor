@@ -1,0 +1,47 @@
+{
+  "item_id": 1513,
+  "item_name": "Magic logs",
+  "generated_at": "2026-05-03T06:41:50Z",
+  "stale_after": "2026-05-04T11:41:50Z",
+  "regime_start": "2025-10-14",
+  "regime_days": 91,
+  "model_tier": "Item-specific",
+  "current_price": 914,
+  "forecast": [
+    {
+      "date": "2026-05-03",
+      "predicted_price": 1838,
+      "change_from_now": 924
+    },
+    {
+      "date": "2026-05-04",
+      "predicted_price": 1827,
+      "change_from_now": 913
+    },
+    {
+      "date": "2026-05-05",
+      "predicted_price": 1824,
+      "change_from_now": 910
+    },
+    {
+      "date": "2026-05-06",
+      "predicted_price": 1819,
+      "change_from_now": 905
+    },
+    {
+      "date": "2026-05-07",
+      "predicted_price": 1825,
+      "change_from_now": 911
+    },
+    {
+      "date": "2026-05-08",
+      "predicted_price": 1829,
+      "change_from_now": 915
+    },
+    {
+      "date": "2026-05-09",
+      "predicted_price": 1822,
+      "change_from_now": 908
+    }
+  ]
+}

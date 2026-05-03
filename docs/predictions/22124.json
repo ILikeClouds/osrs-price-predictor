@@ -1,0 +1,47 @@
+{
+  "item_id": 22124,
+  "item_name": "Superior dragon bones",
+  "generated_at": "2026-05-03T06:41:57Z",
+  "stale_after": "2026-05-04T11:41:57Z",
+  "regime_start": "2026-03-06",
+  "regime_days": 91,
+  "model_tier": "Item-specific",
+  "current_price": 23248,
+  "forecast": [
+    {
+      "date": "2026-05-03",
+      "predicted_price": 45739,
+      "change_from_now": 22491
+    },
+    {
+      "date": "2026-05-04",
+      "predicted_price": 45492,
+      "change_from_now": 22244
+    },
+    {
+      "date": "2026-05-05",
+      "predicted_price": 45179,
+      "change_from_now": 21931
+    },
+    {
+      "date": "2026-05-06",
+      "predicted_price": 45505,
+      "change_from_now": 22257
+    },
+    {
+      "date": "2026-05-07",
+      "predicted_price": 45535,
+      "change_from_now": 22287
+    },
+    {
+      "date": "2026-05-08",
+      "predicted_price": 45272,
+      "change_from_now": 22024
+    },
+    {
+      "date": "2026-05-09",
+      "predicted_price": 45263,
+      "change_from_now": 22015
+    }
+  ]
+}

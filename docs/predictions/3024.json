@@ -1,0 +1,47 @@
+{
+  "item_id": 3024,
+  "item_name": "Super restore(4)",
+  "generated_at": "2026-05-03T06:41:42Z",
+  "stale_after": "2026-05-04T11:41:42Z",
+  "regime_start": "2026-01-31",
+  "regime_days": 91,
+  "model_tier": "Item-specific",
+  "current_price": 10738,
+  "forecast": [
+    {
+      "date": "2026-05-03",
+      "predicted_price": 21489,
+      "change_from_now": 10751
+    },
+    {
+      "date": "2026-05-04",
+      "predicted_price": 21618,
+      "change_from_now": 10880
+    },
+    {
+      "date": "2026-05-05",
+      "predicted_price": 21610,
+      "change_from_now": 10872
+    },
+    {
+      "date": "2026-05-06",
+      "predicted_price": 21595,
+      "change_from_now": 10857
+    },
+    {
+      "date": "2026-05-07",
+      "predicted_price": 21592,
+      "change_from_now": 10854
+    },
+    {
+      "date": "2026-05-08",
+      "predicted_price": 21563,
+      "change_from_now": 10825
+    },
+    {
+      "date": "2026-05-09",
+      "predicted_price": 21446,
+      "change_from_now": 10708
+    }
+  ]
+}

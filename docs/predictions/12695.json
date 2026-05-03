@@ -1,0 +1,47 @@
+{
+  "item_id": 12695,
+  "item_name": "Super combat potion(4)",
+  "generated_at": "2026-05-03T06:41:48Z",
+  "stale_after": "2026-05-04T11:41:48Z",
+  "regime_start": "2026-01-26",
+  "regime_days": 91,
+  "model_tier": "Item-specific",
+  "current_price": 13846,
+  "forecast": [
+    {
+      "date": "2026-05-03",
+      "predicted_price": 27789,
+      "change_from_now": 13943
+    },
+    {
+      "date": "2026-05-04",
+      "predicted_price": 27614,
+      "change_from_now": 13768
+    },
+    {
+      "date": "2026-05-05",
+      "predicted_price": 27560,
+      "change_from_now": 13714
+    },
+    {
+      "date": "2026-05-06",
+      "predicted_price": 27584,
+      "change_from_now": 13738
+    },
+    {
+      "date": "2026-05-07",
+      "predicted_price": 27620,
+      "change_from_now": 13774
+    },
+    {
+      "date": "2026-05-08",
+      "predicted_price": 27707,
+      "change_from_now": 13861
+    },
+    {
+      "date": "2026-05-09",
+      "predicted_price": 27658,
+      "change_from_now": 13812
+    }
+  ]
+}
