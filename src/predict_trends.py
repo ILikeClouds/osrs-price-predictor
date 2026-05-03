@@ -6,8 +6,8 @@ Generates the 7-day price forecast using whichever model tier is appropriate:
   Global model    — when the item has < MIN_DAYS_FOR_ITEM_MODEL regime days
   Item-specific   — otherwise
 
-The chart always shows the full regime window with a vertical line marking
-where training data begins, and labels which model tier produced the forecast.
+Writes the forecast to docs/predictions/{item_id}.json for GitHub Pages,
+and saves a chart to output/price_trend_forecast.png.
 """
 
 import pandas as pd
@@ -15,9 +15,12 @@ import numpy as np
 import os
 import json
 import pickle
+import matplotlib
+matplotlib.use('Agg')   # non-interactive backend safe for CI
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import requests
+from datetime import datetime, timezone, timedelta
 from sklearn.ensemble import RandomForestRegressor
 
 MIN_DAYS_FOR_ITEM_MODEL = 45
@@ -37,7 +40,9 @@ if __name__ == "__main__":
     data_dir     = os.path.join(project_root, 'data')
     models_dir   = os.path.join(project_root, 'models')
     output_dir   = os.path.join(project_root, 'output')
+    docs_dir     = os.path.join(project_root, 'docs', 'predictions')
     os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(docs_dir,   exist_ok=True)
 
     # ── Load config ────────────────────────────────────────────────────────
     config_path = os.path.join(project_root, 'config.json')
@@ -64,14 +69,15 @@ if __name__ == "__main__":
     # ── Load data ──────────────────────────────────────────────────────────
     train_abs  = pd.read_csv(os.path.join(data_dir, 'preprocessed_data.csv'))
     future_abs = pd.read_csv(os.path.join(data_dir, 'future_inference_data.csv'))
-    future_rel = pd.read_csv(os.path.join(data_dir, 'future_inference_rel.csv'))
 
-    future_dates   = pd.to_datetime(future_abs['date']) + pd.Timedelta(days=7)
-    anchor_prices  = future_abs['daily_avg_price_raw'].values
+    future_dates  = pd.to_datetime(future_abs['date']) + pd.Timedelta(days=7)
+    anchor_prices = future_abs['daily_avg_price_raw'].values
 
     # ── Tier 1 — Global model ──────────────────────────────────────────────
-    bundle_path = os.path.join(models_dir, 'global_model.pkl')
-    global_available = os.path.exists(bundle_path)
+    # Only attempt if the global model exists AND the relative feature CSV exists
+    rel_csv_path     = os.path.join(data_dir, 'future_inference_rel.csv')
+    bundle_path      = os.path.join(models_dir, 'global_model.pkl')
+    global_available = os.path.exists(bundle_path) and os.path.exists(rel_csv_path)
 
     if use_global_model and global_available:
         tier_label = "Global"
@@ -81,6 +87,7 @@ if __name__ == "__main__":
         print(f"  Trained on {bundle['items_trained_on']} items, "
               f"{bundle['rows_trained_on']:,} rows")
 
+        future_rel = pd.read_csv(rel_csv_path)
         X_future   = bundle['scaler'].transform(future_rel[RELATIVE_FEATURES])
         pred_pcts  = bundle['model'].predict(X_future)
         future_predictions = np.round(anchor_prices * (1 + pred_pcts)).astype(int)
@@ -88,7 +95,8 @@ if __name__ == "__main__":
     # ── Tier 2 — Item-specific model ───────────────────────────────────────
     else:
         if use_global_model and not global_available:
-            print(f"⚠  Global model not found — falling back to item-specific model.")
+            print("⚠  Global model or relative features not available — "
+                  "falling back to item-specific model.")
         tier_label = "Item-specific"
         print(f"Model tier : {tier_label}")
 
@@ -108,8 +116,8 @@ if __name__ == "__main__":
     print("=" * (40 + len(item_name)) + "\n")
 
     # ── Fetch raw actuals for chart ────────────────────────────────────────
-    headers  = {'User-Agent': 'WGU_D683_Task2_Pipeline', 'Accept': 'application/json'}
-    raw      = pd.DataFrame(
+    headers = {'User-Agent': 'osrs-price-predictor', 'Accept': 'application/json'}
+    raw     = pd.DataFrame(
         requests.get(
             f"https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep=24h&id={item_id}",
             headers=headers
@@ -125,9 +133,37 @@ if __name__ == "__main__":
     )
 
     last_date  = recent['date'].iloc[-1]
-    last_price = recent['raw_price'].iloc[-1]
+    last_price = int(recent['raw_price'].iloc[-1])
     pred_dates  = [last_date] + future_dates.tolist()
     pred_prices = [last_price] + future_predictions.tolist()
+
+    # ── Write prediction JSON for GitHub Pages ─────────────────────────────
+    now_utc    = datetime.now(timezone.utc)
+    stale_after = (now_utc + timedelta(hours=29)).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+    prediction_doc = {
+        "item_id":       item_id,
+        "item_name":     item_name,
+        "generated_at":  now_utc.strftime('%Y-%m-%dT%H:%M:%SZ'),
+        "stale_after":   stale_after,
+        "regime_start":  regime_start,
+        "regime_days":   regime_days,
+        "model_tier":    tier_label,
+        "current_price": last_price,
+        "forecast": [
+            {
+                "date":            d.strftime('%Y-%m-%d'),
+                "predicted_price": int(p),
+                "change_from_now": int(p) - last_price,
+            }
+            for d, p in zip(future_dates, future_predictions)
+        ],
+    }
+
+    json_path = os.path.join(docs_dir, f"{item_id}.json")
+    with open(json_path, 'w') as f:
+        json.dump(prediction_doc, f, indent=2)
+    print(f"Prediction JSON saved → {json_path}")
 
     # ── Plot ───────────────────────────────────────────────────────────────
     fig, ax = plt.subplots(figsize=(14, 7))
@@ -141,10 +177,8 @@ if __name__ == "__main__":
         ax.axvline(pd.to_datetime(regime_start), color='red', linestyle=':',
                    linewidth=1.5, alpha=0.7, label=f'Regime Start ({regime_start})')
 
-    # Shade the forecast zone
     ax.axvspan(last_date, pred_dates[-1], alpha=0.05, color='blue')
 
-    # Cold-start warning annotation
     if tier_label == "Global":
         ax.annotate(
             f"⚠ Cold start: only {regime_days} days of item data.\n"
