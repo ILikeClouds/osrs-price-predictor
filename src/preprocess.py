@@ -126,12 +126,22 @@ def preprocess_data(df: pd.DataFrame) -> tuple:
     future_df = df[df['target_price_7d'].isna()].copy()
     train_df['target_price_7d'] = train_df['target_price_7d'].astype(int)
 
-    # ── Auto Regime Filter ────────────────────────────────────────────────────
+    MIN_REGIME_ROWS = 14  # need at least 14 days to train meaningfully
+
     regime_start = detect_regime_start(df)
     train_df  = train_df[pd.to_datetime(train_df['date'])   >= regime_start].reset_index(drop=True)
     future_df = future_df[pd.to_datetime(future_df['date']) >= regime_start].reset_index(drop=True)
-    print(f"Training on {len(train_df)} days in current regime.")
 
+    if len(train_df) < MIN_REGIME_ROWS:
+        print(f"Only {len(train_df)} days in detected regime — too few to train. "
+              f"Falling back to 30-day window.")
+        fallback_start = pd.to_datetime(df['date'].max()) - pd.Timedelta(days=30)
+        train_df  = train_df[pd.to_datetime(train_df['date'])   >= fallback_start].reset_index(drop=True)
+        future_df = future_df[pd.to_datetime(future_df['date']) >= fallback_start].reset_index(drop=True)
+        regime_start = fallback_start
+
+    print(f"Training on {len(train_df)} days in current regime.")
+    
     # Scaling
     features_to_scale = [
         'avgHighPrice', 'avgLowPrice', 'highPriceVolume', 'lowPriceVolume',
