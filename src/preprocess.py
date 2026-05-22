@@ -71,6 +71,8 @@ def detect_regime_start(df: pd.DataFrame, lookback: int = 14, z_threshold: float
 
     if not breakpoints.empty:
         last_break_date = pd.to_datetime(breakpoints['date'].iloc[-1])
+        # Start training from the day AFTER the break so the volatile crash row
+        # itself doesn't pollute the new regime's feature distributions.
         regime_start = last_break_date + pd.Timedelta(days=1)
         print(f"Regime break detected on {last_break_date.date()} — "
               f"training from {regime_start.date()} onward.")
@@ -127,27 +129,11 @@ def preprocess_data(df: pd.DataFrame) -> tuple:
     train_df['target_price_7d'] = train_df['target_price_7d'].astype(int)
 
     # ── Auto Regime Filter ────────────────────────────────────────────────────
-MIN_REGIME_ROWS = 14
+    regime_start = detect_regime_start(df)
+    train_df  = train_df[pd.to_datetime(train_df['date'])   >= regime_start].reset_index(drop=True)
+    future_df = future_df[pd.to_datetime(future_df['date']) >= regime_start].reset_index(drop=True)
+    print(f"Training on {len(train_df)} days in current regime.")
 
-# Save full unfiltered splits before applying regime filter
-train_df_full  = train_df.copy()
-future_df_full = future_df.copy()
-
-regime_start = detect_regime_start(df)
-train_df  = train_df_full[pd.to_datetime(train_df_full['date'])   >= regime_start].reset_index(drop=True)
-future_df = future_df_full[pd.to_datetime(future_df_full['date']) >= regime_start].reset_index(drop=True)
-
-if len(train_df) < MIN_REGIME_ROWS:
-    print(f"Only {len(train_df)} days in detected regime — too few to train. "
-          f"Falling back to 30-day window.")
-    fallback_start = pd.to_datetime(df['date'].max()) - pd.Timedelta(days=30)
-    # Re-derive from full unfiltered splits, not the already-empty filtered ones
-    train_df  = train_df_full[pd.to_datetime(train_df_full['date'])   >= fallback_start].reset_index(drop=True)
-    future_df = future_df_full[pd.to_datetime(future_df_full['date']) >= fallback_start].reset_index(drop=True)
-    regime_start = fallback_start
-
-print(f"Training on {len(train_df)} days in current regime.")
-    
     # Scaling
     features_to_scale = [
         'avgHighPrice', 'avgLowPrice', 'highPriceVolume', 'lowPriceVolume',
