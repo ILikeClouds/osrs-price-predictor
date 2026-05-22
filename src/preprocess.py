@@ -126,21 +126,27 @@ def preprocess_data(df: pd.DataFrame) -> tuple:
     future_df = df[df['target_price_7d'].isna()].copy()
     train_df['target_price_7d'] = train_df['target_price_7d'].astype(int)
 
-    MIN_REGIME_ROWS = 14  # need at least 14 days to train meaningfully
+    # ── Auto Regime Filter ────────────────────────────────────────────────────
+MIN_REGIME_ROWS = 14
 
-    regime_start = detect_regime_start(df)
-    train_df  = train_df[pd.to_datetime(train_df['date'])   >= regime_start].reset_index(drop=True)
-    future_df = future_df[pd.to_datetime(future_df['date']) >= regime_start].reset_index(drop=True)
+# Save full unfiltered splits before applying regime filter
+train_df_full  = train_df.copy()
+future_df_full = future_df.copy()
 
-    if len(train_df) < MIN_REGIME_ROWS:
-        print(f"Only {len(train_df)} days in detected regime — too few to train. "
-              f"Falling back to 30-day window.")
-        fallback_start = pd.to_datetime(df['date'].max()) - pd.Timedelta(days=30)
-        train_df  = train_df[pd.to_datetime(train_df['date'])   >= fallback_start].reset_index(drop=True)
-        future_df = future_df[pd.to_datetime(future_df['date']) >= fallback_start].reset_index(drop=True)
-        regime_start = fallback_start
+regime_start = detect_regime_start(df)
+train_df  = train_df_full[pd.to_datetime(train_df_full['date'])   >= regime_start].reset_index(drop=True)
+future_df = future_df_full[pd.to_datetime(future_df_full['date']) >= regime_start].reset_index(drop=True)
 
-    print(f"Training on {len(train_df)} days in current regime.")
+if len(train_df) < MIN_REGIME_ROWS:
+    print(f"Only {len(train_df)} days in detected regime — too few to train. "
+          f"Falling back to 30-day window.")
+    fallback_start = pd.to_datetime(df['date'].max()) - pd.Timedelta(days=30)
+    # Re-derive from full unfiltered splits, not the already-empty filtered ones
+    train_df  = train_df_full[pd.to_datetime(train_df_full['date'])   >= fallback_start].reset_index(drop=True)
+    future_df = future_df_full[pd.to_datetime(future_df_full['date']) >= fallback_start].reset_index(drop=True)
+    regime_start = fallback_start
+
+print(f"Training on {len(train_df)} days in current regime.")
     
     # Scaling
     features_to_scale = [
