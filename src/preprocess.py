@@ -6,22 +6,18 @@ import os
 import json
 import argparse
 
+MIN_REGIME_ROWS = 14   # need at least this many rows to train meaningfully
+
 
 # ── Item Lookup ────────────────────────────────────────────────────────────────
 
 def lookup_item(item_name: str) -> dict:
-    """
-    Search the OSRS Wiki item mapping for a name (case-insensitive, partial match).
-    Returns the best match as {'item_id': int, 'item_name': str}, or raises if not found.
-    """
     headers = {'User-Agent': 'osrs-price-predictor', 'Accept': 'application/json'}
     mapping = requests.get(
         "https://prices.runescape.wiki/api/v1/osrs/mapping", headers=headers
     ).json()
 
-    query = item_name.lower().strip()
-
-    # Prefer exact match first, then fall back to partial
+    query   = item_name.lower().strip()
     exact   = [i for i in mapping if i['name'].lower() == query]
     partial = [i for i in mapping if query in i['name'].lower()]
     matches = exact or partial
@@ -56,25 +52,19 @@ def get_osrs_data(item_id: int) -> pd.DataFrame:
 
 # ── Regime Detection ───────────────────────────────────────────────────────────
 
-def detect_regime_start(df: pd.DataFrame, lookback: int = 14, z_threshold: float = 2.5) -> pd.Timestamp:
-    """
-    Walk backwards through daily prices and find the most recent structural break
-    (a day where price moved > z_threshold standard deviations from its rolling mean).
-    Falls back to the most recent 90 days if no break is detected.
-    """
+def detect_regime_start(df: pd.DataFrame,
+                        lookback: int = 14,
+                        z_threshold: float = 2.5) -> pd.Timestamp:
     prices       = df['daily_avg_price_raw']
     rolling_mean = prices.rolling(lookback).mean()
     rolling_std  = prices.rolling(lookback).std().replace(0, 1e-10)
     z_scores     = (prices - rolling_mean) / rolling_std
-
-    breakpoints = df[z_scores.abs() > z_threshold]
+    breakpoints  = df[z_scores.abs() > z_threshold]
 
     if not breakpoints.empty:
-        last_break_date = pd.to_datetime(breakpoints['date'].iloc[-1])
-        # Start training from the day AFTER the break so the volatile crash row
-        # itself doesn't pollute the new regime's feature distributions.
-        regime_start = last_break_date + pd.Timedelta(days=1)
-        print(f"Regime break detected on {last_break_date.date()} — "
+        last_break  = pd.to_datetime(breakpoints['date'].iloc[-1])
+        regime_start = last_break + pd.Timedelta(days=1)
+        print(f"Regime break detected on {last_break.date()} — "
               f"training from {regime_start.date()} onward.")
     else:
         regime_start = pd.to_datetime(df['date'].max()) - pd.Timedelta(days=90)
@@ -117,24 +107,49 @@ def preprocess_data(df: pd.DataFrame) -> tuple:
     df['volume_ma_7']     = df['total_volume'].rolling(7).mean()
     df['volume_momentum'] = df['total_volume'] - df['volume_ma_7']
 
-    # Target
+    # Target — absolute price 7 days ahead
     df['target_price_7d'] = df['daily_avg_price_raw'].shift(-7)
 
-    # Drop NaN rows from rolling features
+    # Drop rows where rolling features are not yet populated
     df = df.dropna(subset=['rsi_14', 'price_lag_14', '90_day_moving_avg']).reset_index(drop=True)
 
-    # Split train / future
-    train_df  = df.dropna(subset=['target_price_7d']).copy()
-    future_df = df[df['target_price_7d'].isna()].copy()
-    train_df['target_price_7d'] = train_df['target_price_7d'].astype(int)
+    # ── Split into train / future BEFORE any regime filtering ─────────────────
+    # Saving these originals is critical: the regime fallback re-filters from
+    # here rather than from an already-empty filtered DataFrame.
+    all_train  = df.dropna(subset=['target_price_7d']).copy()
+    all_future = df[df['target_price_7d'].isna()].copy()
+    all_train['target_price_7d'] = all_train['target_price_7d'].astype(int)
 
     # ── Auto Regime Filter ────────────────────────────────────────────────────
     regime_start = detect_regime_start(df)
-    train_df  = train_df[pd.to_datetime(train_df['date'])   >= regime_start].reset_index(drop=True)
-    future_df = future_df[pd.to_datetime(future_df['date']) >= regime_start].reset_index(drop=True)
-    print(f"Training on {len(train_df)} days in current regime.")
 
-    # Scaling
+    train_df  = all_train[ pd.to_datetime(all_train['date'])  >= regime_start].reset_index(drop=True)
+    future_df = all_future[pd.to_datetime(all_future['date']) >= regime_start].reset_index(drop=True)
+
+    if len(train_df) < MIN_REGIME_ROWS:
+        # New regime is too fresh — fall back to the last 30 days of ALL data
+        fallback_start = pd.to_datetime(all_train['date'].max()) - pd.Timedelta(days=30)
+        print(f"Only {len(train_df)} days in new regime — falling back to "
+              f"30-day window from {fallback_start.date()}.")
+        train_df  = all_train[ pd.to_datetime(all_train['date'])  >= fallback_start].reset_index(drop=True)
+        future_df = all_future[pd.to_datetime(all_future['date']) >= fallback_start].reset_index(drop=True)
+        regime_start = fallback_start
+
+    if len(train_df) < MIN_REGIME_ROWS:
+        # Still not enough — use every available training row
+        print(f"Still only {len(train_df)} rows after 30-day fallback — "
+              f"using all {len(all_train)} available training rows.")
+        train_df  = all_train.copy()
+        future_df = all_future.copy()
+        regime_start = pd.to_datetime(all_train['date'].min())
+
+    print(f"Training on {len(train_df)} days.")
+
+    # future_df should always include the most recent rows regardless of regime
+    if len(future_df) == 0:
+        future_df = all_future.copy()
+
+    # ── Scaling ────────────────────────────────────────────────────────────────
     features_to_scale = [
         'avgHighPrice', 'avgLowPrice', 'highPriceVolume', 'lowPriceVolume',
         'daily_avg_price', 'total_volume', 'price_spread',
@@ -168,13 +183,11 @@ if __name__ == "__main__":
     config_path  = os.path.join(project_root, 'config.json')
     os.makedirs(data_dir, exist_ok=True)
 
-    # Load existing config so we can merge without clobbering hyperparams
     config = {}
     if os.path.exists(config_path):
         with open(config_path) as f:
             config = json.load(f)
 
-    # Resolve which item to use
     if args.item_name:
         item_info = lookup_item(args.item_name)
         config.update(item_info)
@@ -191,8 +204,8 @@ if __name__ == "__main__":
 
     train_df, future_df, regime_start = preprocess_data(raw_df)
 
-    # Persist regime start alongside item info and hyperparams
     config['regime_start'] = regime_start.strftime('%Y-%m-%d')
+    config['regime_days']  = len(train_df)
     with open(config_path, 'w') as f:
         json.dump(config, f, indent=2)
     print(f"Config updated → {config_path}")
