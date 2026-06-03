@@ -1,47 +1,47 @@
 {
   "item_id": 20997,
   "item_name": "Twisted bow",
-  "generated_at": "2026-06-02T05:28:08Z",
-  "stale_after": "2026-06-03T10:28:08Z",
-  "regime_start": "2026-04-25",
+  "generated_at": "2026-06-03T00:09:25Z",
+  "stale_after": "2026-06-04T05:09:25Z",
+  "regime_start": "2026-04-26",
   "regime_days": 31,
   "model_tier": "Item-specific",
-  "current_price": 1557060668,
+  "current_price": 1553707160,
   "forecast": [
     {
-      "date": "2026-06-02",
-      "predicted_price": 1552230546,
-      "change_from_now": -4830122
-    },
-    {
       "date": "2026-06-03",
-      "predicted_price": 1551968058,
-      "change_from_now": -5092610
+      "predicted_price": 1553947506,
+      "change_from_now": 240346
     },
     {
       "date": "2026-06-04",
-      "predicted_price": 1551968058,
-      "change_from_now": -5092610
+      "predicted_price": 1554510921,
+      "change_from_now": 803761
     },
     {
       "date": "2026-06-05",
-      "predicted_price": 1552065314,
-      "change_from_now": -4995354
+      "predicted_price": 1554959218,
+      "change_from_now": 1252058
     },
     {
       "date": "2026-06-06",
-      "predicted_price": 1552065314,
-      "change_from_now": -4995354
+      "predicted_price": 1554424590,
+      "change_from_now": 717430
     },
     {
       "date": "2026-06-07",
-      "predicted_price": 1552193114,
-      "change_from_now": -4867554
+      "predicted_price": 1555142465,
+      "change_from_now": 1435305
     },
     {
       "date": "2026-06-08",
-      "predicted_price": 1552060290,
-      "change_from_now": -5000378
+      "predicted_price": 1556301733,
+      "change_from_now": 2594573
+    },
+    {
+      "date": "2026-06-09",
+      "predicted_price": 1556540408,
+      "change_from_now": 2833248
     }
   ]
 }

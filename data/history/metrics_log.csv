@@ -1,0 +1,6 @@
+date,item,mae,rmse,r2,naive_mae,improvement_pct,steps,regime_start
+2026-04-22,Dragon bones,40.66,50.63,0.6693,63.61,36.1,33,2026-01-24
+2026-04-23,Dragon bones,40.78,50.52,0.6883,65.67,37.9,33,2026-01-24
+2026-05-02,Dragon bones,Item-specific,8.57,10.73,0.9924,37,91,2026-01-24
+2026-05-02,Dragon bones,Item-specific,8.57,10.73,0.9924,37,91,2026-01-24
+2026-05-02,Dragon bones,Item-specific,9.27,11.49,0.9912,37,91,2026-01-24
