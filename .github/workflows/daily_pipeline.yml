@@ -2,15 +2,14 @@ name: Daily Price Pipeline
 
 on:
   schedule:
-    - cron: '0 1 * * *'   # 01:00 UTC — after OSRS Wiki data is settled
-  workflow_dispatch:       # allow manual runs from the GitHub Actions tab
+    - cron: '0 1 * * *'
+  workflow_dispatch:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
 
-  # ── Job 1: Build the item matrix from tracked_items.json ──────────────────
   generate-matrix:
     runs-on: ubuntu-latest
     outputs:
@@ -30,15 +29,14 @@ jobs:
           echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
           echo "Matrix: $MATRIX"
 
-  # ── Job 2: Run pipeline for each item in parallel ─────────────────────────
   run-pipeline:
     needs: generate-matrix
     runs-on: ubuntu-latest
     strategy:
       matrix:
         item: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
-      max-parallel: 8     # 8 items at a time keeps API load reasonable
-      fail-fast: false    # one item failing doesn't cancel the others
+      max-parallel: 8
+      fail-fast: false
 
     steps:
       - uses: actions/checkout@v4
@@ -57,9 +55,7 @@ jobs:
       - name: Forecast ${{ matrix.item }}
         run: python src/predict_trends.py
 
-      # Upload only the single fresh JSON this job produced.
-      # Writing to output/ (not docs/) means no stale files from the repo
-      # checkout get mixed in with this run's artifact.
+      # Prediction JSON — one fresh file per job, no stale repo files mixed in
       - name: Upload prediction artifact
         uses: actions/upload-artifact@v4
         with:
@@ -67,14 +63,15 @@ jobs:
           path: output/*.json
           retention-days: 2
 
+      # History CSV — relative features for global model training
+      # output/{item_id}.csv is written by preprocess.py
       - name: Upload history artifact
         uses: actions/upload-artifact@v4
         with:
           name: history-${{ strategy.job-index }}
-          path: data/history/
+          path: output/*.csv
           retention-days: 2
 
-  # ── Job 3: Collect results, rebuild global model, commit ──────────────────
   commit-results:
     needs: run-pipeline
     runs-on: ubuntu-latest
@@ -92,8 +89,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # Download all 16 fresh prediction JSONs into docs/predictions/
-      # Each artifact contains exactly one file so nothing gets stomped.
       - name: Download all prediction artifacts
         uses: actions/download-artifact@v4
         with:
@@ -101,6 +96,8 @@ jobs:
           path: docs/predictions/
           merge-multiple: true
 
+      # History CSVs land in data/history/{item_id}.csv alongside any
+      # previously committed files — the global model accumulates over time
       - name: Download all history artifacts
         uses: actions/download-artifact@v4
         with:
