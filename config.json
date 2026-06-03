@@ -1,7 +1,7 @@
 {
   "max_depth": null,
   "min_samples_split": 5,
-  "n_estimators": 50,
+  "n_estimators": 200,
   "item_id": 536,
   "item_name": "Dragon bones",
   "regime_start": "2026-01-24",
