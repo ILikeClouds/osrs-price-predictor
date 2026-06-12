@@ -1,18 +1,13 @@
 {
   "item_id": 12934,
   "item_name": "Zulrah's scales",
-  "generated_at": "2026-06-11T05:26:30Z",
-  "stale_after": "2026-06-12T10:26:30Z",
+  "generated_at": "2026-06-12T05:29:22Z",
+  "stale_after": "2026-06-13T10:29:22Z",
   "regime_start": "2026-05-16",
-  "regime_days": 19,
+  "regime_days": 20,
   "model_tier": "Item-specific",
   "current_price": 178,
   "forecast": [
-    {
-      "date": "2026-06-11",
-      "predicted_price": 178,
-      "change_from_now": 0
-    },
     {
       "date": "2026-06-12",
       "predicted_price": 178,
@@ -40,6 +35,11 @@
     },
     {
       "date": "2026-06-17",
+      "predicted_price": 178,
+      "change_from_now": 0
+    },
+    {
+      "date": "2026-06-18",
       "predicted_price": 178,
       "change_from_now": 0
     }
