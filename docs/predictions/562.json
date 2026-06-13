@@ -1,47 +1,47 @@
 {
   "item_id": 562,
   "item_name": "Chaos rune",
-  "generated_at": "2026-06-12T05:29:21Z",
-  "stale_after": "2026-06-13T10:29:21Z",
+  "generated_at": "2026-06-13T05:18:53Z",
+  "stale_after": "2026-06-14T10:18:53Z",
   "regime_start": "2026-03-26",
-  "regime_days": 71,
+  "regime_days": 72,
   "model_tier": "Item-specific",
-  "current_price": 108,
+  "current_price": 112,
   "forecast": [
     {
-      "date": "2026-06-12",
-      "predicted_price": 105,
-      "change_from_now": -3
-    },
-    {
       "date": "2026-06-13",
-      "predicted_price": 105,
-      "change_from_now": -3
+      "predicted_price": 106,
+      "change_from_now": -6
     },
     {
       "date": "2026-06-14",
-      "predicted_price": 105,
-      "change_from_now": -3
+      "predicted_price": 106,
+      "change_from_now": -6
     },
     {
       "date": "2026-06-15",
-      "predicted_price": 105,
-      "change_from_now": -3
+      "predicted_price": 106,
+      "change_from_now": -6
     },
     {
       "date": "2026-06-16",
       "predicted_price": 105,
-      "change_from_now": -3
+      "change_from_now": -7
     },
     {
       "date": "2026-06-17",
       "predicted_price": 105,
-      "change_from_now": -3
+      "change_from_now": -7
     },
     {
       "date": "2026-06-18",
-      "predicted_price": 105,
-      "change_from_now": -3
+      "predicted_price": 106,
+      "change_from_now": -6
+    },
+    {
+      "date": "2026-06-19",
+      "predicted_price": 106,
+      "change_from_now": -6
     }
   ]
 }
