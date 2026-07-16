@@ -1,47 +1,47 @@
 {
   "item_id": 560,
   "item_name": "Death rune",
-  "generated_at": "2026-07-15T03:56:00Z",
-  "stale_after": "2026-07-16T08:56:00Z",
-  "regime_start": "2026-06-07",
+  "generated_at": "2026-07-16T03:58:31Z",
+  "stale_after": "2026-07-17T08:58:31Z",
+  "regime_start": "2026-06-08",
   "regime_days": 31,
   "model_tier": "Item-specific",
-  "current_price": 180,
+  "current_price": 181,
   "forecast": [
     {
-      "date": "2026-07-15",
-      "predicted_price": 182,
-      "change_from_now": 2
-    },
-    {
       "date": "2026-07-16",
-      "predicted_price": 183,
-      "change_from_now": 3
+      "predicted_price": 182,
+      "change_from_now": 1
     },
     {
       "date": "2026-07-17",
-      "predicted_price": 184,
-      "change_from_now": 4
+      "predicted_price": 183,
+      "change_from_now": 2
     },
     {
       "date": "2026-07-18",
-      "predicted_price": 184,
-      "change_from_now": 4
+      "predicted_price": 183,
+      "change_from_now": 2
     },
     {
       "date": "2026-07-19",
       "predicted_price": 186,
-      "change_from_now": 6
+      "change_from_now": 5
     },
     {
       "date": "2026-07-20",
       "predicted_price": 186,
-      "change_from_now": 6
+      "change_from_now": 5
     },
     {
       "date": "2026-07-21",
-      "predicted_price": 186,
+      "predicted_price": 187,
       "change_from_now": 6
+    },
+    {
+      "date": "2026-07-22",
+      "predicted_price": 189,
+      "change_from_now": 8
     }
   ]
 }
