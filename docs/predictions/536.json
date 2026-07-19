@@ -1,47 +1,47 @@
 {
   "item_id": 536,
   "item_name": "Dragon bones",
-  "generated_at": "2026-07-18T03:52:23Z",
-  "stale_after": "2026-07-19T08:52:23Z",
-  "regime_start": "2026-06-10",
+  "generated_at": "2026-07-19T04:19:31Z",
+  "stale_after": "2026-07-20T09:19:31Z",
+  "regime_start": "2026-06-11",
   "regime_days": 31,
   "model_tier": "Item-specific",
-  "current_price": 3166,
+  "current_price": 3182,
   "forecast": [
     {
-      "date": "2026-07-18",
-      "predicted_price": 3129,
-      "change_from_now": -37
-    },
-    {
       "date": "2026-07-19",
-      "predicted_price": 3128,
-      "change_from_now": -38
+      "predicted_price": 3139,
+      "change_from_now": -43
     },
     {
       "date": "2026-07-20",
-      "predicted_price": 3130,
-      "change_from_now": -36
+      "predicted_price": 3138,
+      "change_from_now": -44
     },
     {
       "date": "2026-07-21",
-      "predicted_price": 3131,
-      "change_from_now": -35
+      "predicted_price": 3137,
+      "change_from_now": -45
     },
     {
       "date": "2026-07-22",
-      "predicted_price": 3128,
-      "change_from_now": -38
+      "predicted_price": 3137,
+      "change_from_now": -45
     },
     {
       "date": "2026-07-23",
-      "predicted_price": 3130,
-      "change_from_now": -36
+      "predicted_price": 3134,
+      "change_from_now": -48
     },
     {
       "date": "2026-07-24",
-      "predicted_price": 3130,
-      "change_from_now": -36
+      "predicted_price": 3138,
+      "change_from_now": -44
+    },
+    {
+      "date": "2026-07-25",
+      "predicted_price": 3136,
+      "change_from_now": -46
     }
   ]
 }
