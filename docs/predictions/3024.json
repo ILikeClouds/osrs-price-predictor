@@ -1,47 +1,47 @@
 {
   "item_id": 3024,
   "item_name": "Super restore(4)",
-  "generated_at": "2026-08-15T02:12:41Z",
-  "stale_after": "2026-08-16T07:12:41Z",
+  "generated_at": "2026-08-16T02:20:24Z",
+  "stale_after": "2026-08-17T07:20:24Z",
   "regime_start": "2026-07-24",
-  "regime_days": 14,
+  "regime_days": 16,
   "model_tier": "Item-specific",
-  "current_price": 10254,
+  "current_price": 10174,
   "forecast": [
     {
-      "date": "2026-08-14",
-      "predicted_price": 10154,
-      "change_from_now": -100
-    },
-    {
-      "date": "2026-08-15",
-      "predicted_price": 10152,
-      "change_from_now": -102
-    },
-    {
       "date": "2026-08-16",
-      "predicted_price": 10133,
-      "change_from_now": -121
+      "predicted_price": 10148,
+      "change_from_now": -26
     },
     {
       "date": "2026-08-17",
-      "predicted_price": 10124,
-      "change_from_now": -130
+      "predicted_price": 10145,
+      "change_from_now": -29
     },
     {
       "date": "2026-08-18",
-      "predicted_price": 10112,
-      "change_from_now": -142
+      "predicted_price": 10132,
+      "change_from_now": -42
     },
     {
       "date": "2026-08-19",
-      "predicted_price": 10107,
-      "change_from_now": -147
+      "predicted_price": 10123,
+      "change_from_now": -51
     },
     {
       "date": "2026-08-20",
-      "predicted_price": 10083,
-      "change_from_now": -171
+      "predicted_price": 10099,
+      "change_from_now": -75
+    },
+    {
+      "date": "2026-08-21",
+      "predicted_price": 10095,
+      "change_from_now": -79
+    },
+    {
+      "date": "2026-08-22",
+      "predicted_price": 10089,
+      "change_from_now": -85
     }
   ]
 }
