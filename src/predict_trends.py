@@ -16,6 +16,7 @@ import numpy as np
 import os
 import json
 import pickle
+import sys
 import matplotlib
 matplotlib.use('Agg')   # non-interactive backend safe for CI
 import matplotlib.pyplot as plt
@@ -23,6 +24,13 @@ import matplotlib.dates as mdates
 import requests
 from datetime import datetime, timezone, timedelta
 from sklearn.ensemble import RandomForestRegressor
+
+# Import adaptive_params so predictions use the same regularised
+# hyperparameters as the training evaluation.
+_src_dir = os.path.dirname(os.path.abspath(__file__))
+if _src_dir not in sys.path:
+    sys.path.insert(0, _src_dir)
+from train_model import adaptive_params
 
 MIN_DAYS_FOR_ITEM_MODEL = 45
 
@@ -57,10 +65,11 @@ if __name__ == "__main__":
     use_global_model = config.get('use_global_model', True)
 
     META_KEYS = {'item_id', 'item_name', 'regime_start', 'regime_days', 'use_global_model'}
-    model_params = {k: v for k, v in config.items() if k not in META_KEYS}
-    model_params.pop('random_state', None)
-    if not model_params:
-        model_params = {'n_estimators': 200}
+    tuned_params = {k: v for k, v in config.items() if k not in META_KEYS}
+    tuned_params.pop('random_state', None)
+    # Apply the same regime-aware regularisation used during training so that
+    # the model fitted here is identical to the one that was evaluated.
+    model_params = adaptive_params(regime_days, tuned_params)
 
     print(f"Item       : {item_name} (ID: {item_id})")
     print(f"Regime     : from {regime_start} ({regime_days} days)")
