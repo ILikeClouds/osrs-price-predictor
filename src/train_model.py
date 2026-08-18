@@ -14,6 +14,18 @@ Two-tier model selection:
 
 Evaluation uses Walk-Forward Validation in both cases so reported metrics
 reflect real-world forecasting performance rather than in-sample fit.
+
+Adaptive regularization
+───────────────────────
+Short regime windows (~30–60 rows) are too small for an unrestricted Random
+Forest — 200 deep trees will memorise the training set and generalise
+poorly.  adaptive_params() overrides the stored/tuned hyperparameters with
+regime-length-scaled constraints so the model stays regularised until
+enough data has accumulated:
+
+  regime_days < 60   → n_estimators=100, max_depth=5,  min_samples_leaf=3
+  regime_days < 120  → n_estimators=150, max_depth=10, min_samples_leaf=2
+  regime_days ≥ 120  → use stored/tuned params as-is
 """
 
 import pandas as pd
@@ -38,6 +50,39 @@ RELATIVE_FEATURES = [
     'lag_return_1d', 'lag_return_2d', 'lag_return_3d',
     'lag_return_7d', 'lag_return_14d',
 ]
+
+
+def adaptive_params(regime_days: int, tuned_params: dict) -> dict:
+    """
+    Return regularised RandomForest hyperparameters scaled to regime length.
+
+    When the regime is young we can't trust a large, deep forest — it will
+    overfit the small training set and produce overconfident predictions that
+    swing the wrong direction.  The thresholds below were chosen to keep the
+    effective VC-dimension roughly proportional to the available data.
+
+    tuned_params are ONLY used when regime_days >= 120; below that threshold
+    the adaptive constraints take full priority regardless of what tune_model
+    found (because tune_model itself may have overfit on short data).
+    """
+    if regime_days < 60:
+        return {
+            'n_estimators':    100,
+            'max_depth':       5,
+            'min_samples_leaf': 3,
+            'min_samples_split': 5,
+        }
+    if regime_days < 120:
+        return {
+            'n_estimators':    150,
+            'max_depth':       10,
+            'min_samples_leaf': 2,
+            'min_samples_split': tuned_params.get('min_samples_split', 5),
+        }
+    # ≥ 120 days: enough data to trust the tuned parameters
+    base = {'n_estimators': 200, 'min_samples_split': 5}
+    base.update(tuned_params)
+    return base
 
 
 def walk_forward_eval(X, y, anchor_prices, params, warmup_frac=0.6):
@@ -90,19 +135,21 @@ if __name__ == "__main__":
             config = json.load(f)
     META_KEYS = {'item_id', 'item_name', 'regime_start', 'regime_days',
                  'use_global_model'}
-    params = {k: v for k, v in config.items() if k not in META_KEYS}
-    params.pop('random_state', None)
-    if not params:
-        params = {'n_estimators': 200}
+    tuned_params = {k: v for k, v in config.items() if k not in META_KEYS}
+    tuned_params.pop('random_state', None)
 
+    item_id          = config.get('item_id', 0)
     item_name        = config.get('item_name', 'Unknown')
     regime_days      = config.get('regime_days', 0)
     use_global_model = config.get('use_global_model', True)
 
+    # ── Apply adaptive regularisation ─────────────────────────────────────
+    params = adaptive_params(regime_days, tuned_params)
+
     print(f"Item         : {item_name}")
     print(f"Regime days  : {regime_days}")
     print(f"Model tier   : {'Global (cold start)' if use_global_model else 'Item-specific'}")
-    print(f"Params       : {params}")
+    print(f"Params       : {params}  (adaptive, regime_days={regime_days})")
 
     # ── Tier 1 — Global model ──────────────────────────────────────────────
     if use_global_model:
@@ -121,8 +168,8 @@ if __name__ == "__main__":
                   f"({bundle['items_trained_on']} items, "
                   f"{bundle['rows_trained_on']:,} rows)")
 
-            df_rel       = pd.read_csv(os.path.join(data_dir, 'preprocessed_data_rel.csv'))
-            df_abs       = pd.read_csv(os.path.join(data_dir, 'preprocessed_data.csv'))
+            df_rel        = pd.read_csv(os.path.join(data_dir, 'preprocessed_data_rel.csv'))
+            df_abs        = pd.read_csv(os.path.join(data_dir, 'preprocessed_data.csv'))
             anchor_prices = df_abs['daily_avg_price_raw'].values
             X_rel         = df_rel[RELATIVE_FEATURES]
             y_pct         = df_rel['target_pct_7d']
@@ -134,12 +181,12 @@ if __name__ == "__main__":
 
     # ── Tier 2 — Item-specific model ───────────────────────────────────────
     if not use_global_model:
-        df           = pd.read_csv(os.path.join(data_dir, 'preprocessed_data.csv'))
+        df            = pd.read_csv(os.path.join(data_dir, 'preprocessed_data.csv'))
         anchor_prices = df['daily_avg_price_raw'].values
         X = df.drop(columns=['target_price_7d', 'date', 'daily_avg_price_raw'])
         y = df['target_price_7d']
 
-        print(f"\nLoaded tuned parameters: {params}")
+        print(f"\nEffective parameters: {params}")
         print("Running walk-forward evaluation (item-specific model)...")
         actuals, preds = walk_forward_eval(X, y, anchor_prices, params)
 
@@ -154,17 +201,28 @@ if __name__ == "__main__":
     print(f"RMSE : {rmse:.2f}")
     print(f"R²   : {r2:.4f}")
 
-    # ── Append to metrics log ──────────────────────────────────────────────
-    log_path    = os.path.join(output_dir, 'metrics_log.csv')
-    write_header = not os.path.exists(log_path)
-    with open(log_path, 'a', newline='') as f:
-        w = csv.writer(f)
-        if write_header:
-            w.writerow(['date', 'item', 'model_tier', 'mae', 'rmse', 'r2',
-                        'steps', 'regime_days', 'regime_start'])
-        w.writerow([
-            date.today(), item_name, tier_label,
-            round(mae, 2), round(rmse, 2), round(r2, 4),
-            len(actuals), regime_days, config.get('regime_start', ''),
-        ])
-    print(f"Metrics logged → {log_path}")
+    # ── Append to metrics logs ─────────────────────────────────────────────
+    # Write to two places:
+    #   output/metrics_log.csv          — legacy local path (run_pipeline.py)
+    #   output/metrics_{item_id}.csv    — per-item file for CI artifact upload;
+    #                                     commit-results merges these into
+    #                                     data/history/metrics_log.csv
+    row = [
+        date.today(), item_name, tier_label,
+        round(mae, 2), round(rmse, 2), round(r2, 4),
+        len(actuals), regime_days, config.get('regime_start', ''),
+    ]
+    header = ['date', 'item', 'model_tier', 'mae', 'rmse', 'r2',
+              'steps', 'regime_days', 'regime_start']
+
+    for log_path in [
+        os.path.join(output_dir, 'metrics_log.csv'),
+        os.path.join(output_dir, f'metrics_{item_id}.csv'),
+    ]:
+        write_header = not os.path.exists(log_path)
+        with open(log_path, 'a', newline='') as f:
+            w = csv.writer(f)
+            if write_header:
+                w.writerow(header)
+            w.writerow(row)
+        print(f"Metrics logged → {log_path}")
