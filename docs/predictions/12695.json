@@ -1,47 +1,47 @@
 {
   "item_id": 12695,
   "item_name": "Super combat potion(4)",
-  "generated_at": "2026-08-24T02:21:58Z",
-  "stale_after": "2026-08-25T07:21:58Z",
+  "generated_at": "2026-08-25T02:17:26Z",
+  "stale_after": "2026-08-26T07:17:26Z",
   "regime_start": "2026-04-26",
-  "regime_days": 112,
+  "regime_days": 114,
   "model_tier": "Item-specific",
-  "current_price": 12080,
+  "current_price": 12020,
   "forecast": [
     {
-      "date": "2026-08-23",
-      "predicted_price": 12066,
-      "change_from_now": -14
-    },
-    {
-      "date": "2026-08-24",
-      "predicted_price": 12074,
-      "change_from_now": -6
-    },
-    {
       "date": "2026-08-25",
-      "predicted_price": 12071,
-      "change_from_now": -9
+      "predicted_price": 12061,
+      "change_from_now": 41
     },
     {
       "date": "2026-08-26",
-      "predicted_price": 12083,
-      "change_from_now": 3
+      "predicted_price": 12060,
+      "change_from_now": 40
     },
     {
       "date": "2026-08-27",
-      "predicted_price": 12074,
-      "change_from_now": -6
+      "predicted_price": 12068,
+      "change_from_now": 48
     },
     {
       "date": "2026-08-28",
-      "predicted_price": 12048,
-      "change_from_now": -32
+      "predicted_price": 12028,
+      "change_from_now": 8
     },
     {
       "date": "2026-08-29",
-      "predicted_price": 12055,
-      "change_from_now": -25
+      "predicted_price": 12041,
+      "change_from_now": 21
+    },
+    {
+      "date": "2026-08-30",
+      "predicted_price": 12047,
+      "change_from_now": 27
+    },
+    {
+      "date": "2026-08-31",
+      "predicted_price": 11998,
+      "change_from_now": -22
     }
   ]
 }
