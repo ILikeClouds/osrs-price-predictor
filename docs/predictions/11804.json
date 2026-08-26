@@ -1,47 +1,47 @@
 {
   "item_id": 11804,
   "item_name": "Bandos godsword",
-  "generated_at": "2026-08-25T02:17:22Z",
-  "stale_after": "2026-08-26T07:17:22Z",
+  "generated_at": "2026-08-26T02:24:01Z",
+  "stale_after": "2026-08-27T07:24:01Z",
   "regime_start": "2026-07-03",
-  "regime_days": 46,
+  "regime_days": 47,
   "model_tier": "Item-specific",
-  "current_price": 17941550,
+  "current_price": 18007896,
   "forecast": [
     {
-      "date": "2026-08-25",
-      "predicted_price": 17885042,
-      "change_from_now": -56508
-    },
-    {
       "date": "2026-08-26",
-      "predicted_price": 18237043,
-      "change_from_now": 295493
+      "predicted_price": 18256737,
+      "change_from_now": 248841
     },
     {
       "date": "2026-08-27",
-      "predicted_price": 18440215,
-      "change_from_now": 498665
+      "predicted_price": 18433294,
+      "change_from_now": 425398
     },
     {
       "date": "2026-08-28",
-      "predicted_price": 18463961,
-      "change_from_now": 522411
+      "predicted_price": 18466613,
+      "change_from_now": 458717
     },
     {
       "date": "2026-08-29",
-      "predicted_price": 18509075,
-      "change_from_now": 567525
+      "predicted_price": 18499457,
+      "change_from_now": 491561
     },
     {
       "date": "2026-08-30",
-      "predicted_price": 18511809,
-      "change_from_now": 570259
+      "predicted_price": 18505369,
+      "change_from_now": 497473
     },
     {
       "date": "2026-08-31",
-      "predicted_price": 18443307,
-      "change_from_now": 501757
+      "predicted_price": 18441599,
+      "change_from_now": 433703
+    },
+    {
+      "date": "2026-09-01",
+      "predicted_price": 18444545,
+      "change_from_now": 436649
     }
   ]
 }
