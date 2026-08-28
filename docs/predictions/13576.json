@@ -1,47 +1,47 @@
 {
   "item_id": 13576,
   "item_name": "Dragon warhammer",
-  "generated_at": "2026-08-27T10:54:14Z",
-  "stale_after": "2026-08-28T15:54:14Z",
+  "generated_at": "2026-08-28T12:29:15Z",
+  "stale_after": "2026-08-29T17:29:15Z",
   "regime_start": "2026-07-30",
-  "regime_days": 21,
+  "regime_days": 22,
   "model_tier": "Item-specific",
-  "current_price": 16120228,
+  "current_price": 16108163,
   "forecast": [
     {
-      "date": "2026-08-27",
-      "predicted_price": 16190435,
-      "change_from_now": 70207
-    },
-    {
       "date": "2026-08-28",
-      "predicted_price": 16205524,
-      "change_from_now": 85296
+      "predicted_price": 16155401,
+      "change_from_now": 47238
     },
     {
       "date": "2026-08-29",
-      "predicted_price": 16202055,
-      "change_from_now": 81827
+      "predicted_price": 16158823,
+      "change_from_now": 50660
     },
     {
       "date": "2026-08-30",
-      "predicted_price": 16210407,
-      "change_from_now": 90179
+      "predicted_price": 16173935,
+      "change_from_now": 65772
     },
     {
       "date": "2026-08-31",
-      "predicted_price": 16209209,
-      "change_from_now": 88981
+      "predicted_price": 16161949,
+      "change_from_now": 53786
     },
     {
       "date": "2026-09-01",
-      "predicted_price": 16227083,
-      "change_from_now": 106855
+      "predicted_price": 16181927,
+      "change_from_now": 73764
     },
     {
       "date": "2026-09-02",
-      "predicted_price": 16223223,
-      "change_from_now": 102995
+      "predicted_price": 16185471,
+      "change_from_now": 77308
+    },
+    {
+      "date": "2026-09-03",
+      "predicted_price": 16188379,
+      "change_from_now": 80216
     }
   ]
 }
