@@ -1,47 +1,47 @@
 {
   "item_id": 565,
   "item_name": "Blood rune",
-  "generated_at": "2026-08-28T12:28:30Z",
-  "stale_after": "2026-08-29T17:28:30Z",
-  "regime_start": "2026-07-20",
+  "generated_at": "2026-08-29T07:38:20Z",
+  "stale_after": "2026-08-30T12:38:20Z",
+  "regime_start": "2026-07-21",
   "regime_days": 31,
   "model_tier": "Item-specific",
-  "current_price": 354,
+  "current_price": 352,
   "forecast": [
     {
-      "date": "2026-08-27",
-      "predicted_price": 355,
-      "change_from_now": 1
-    },
-    {
       "date": "2026-08-28",
-      "predicted_price": 355,
-      "change_from_now": 1
-    },
-    {
-      "date": "2026-08-29",
-      "predicted_price": 354,
+      "predicted_price": 352,
       "change_from_now": 0
     },
     {
-      "date": "2026-08-30",
-      "predicted_price": 353,
+      "date": "2026-08-29",
+      "predicted_price": 351,
       "change_from_now": -1
+    },
+    {
+      "date": "2026-08-30",
+      "predicted_price": 349,
+      "change_from_now": -3
     },
     {
       "date": "2026-08-31",
-      "predicted_price": 353,
-      "change_from_now": -1
+      "predicted_price": 348,
+      "change_from_now": -4
     },
     {
       "date": "2026-09-01",
-      "predicted_price": 352,
-      "change_from_now": -2
+      "predicted_price": 348,
+      "change_from_now": -4
     },
     {
       "date": "2026-09-02",
-      "predicted_price": 353,
-      "change_from_now": -1
+      "predicted_price": 350,
+      "change_from_now": -2
+    },
+    {
+      "date": "2026-09-03",
+      "predicted_price": 350,
+      "change_from_now": -2
     }
   ]
 }
