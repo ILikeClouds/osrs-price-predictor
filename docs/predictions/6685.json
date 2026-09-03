@@ -1,47 +1,47 @@
 {
   "item_id": 6685,
   "item_name": "Saradomin brew(4)",
-  "generated_at": "2026-09-02T05:24:29Z",
-  "stale_after": "2026-09-03T10:24:29Z",
+  "generated_at": "2026-09-03T05:26:56Z",
+  "stale_after": "2026-09-04T10:26:56Z",
   "regime_start": "2026-08-02",
-  "regime_days": 23,
+  "regime_days": 25,
   "model_tier": "Item-specific",
-  "current_price": 6973,
+  "current_price": 7049,
   "forecast": [
     {
-      "date": "2026-09-01",
-      "predicted_price": 6995,
-      "change_from_now": 22
-    },
-    {
-      "date": "2026-09-02",
-      "predicted_price": 7006,
-      "change_from_now": 33
-    },
-    {
       "date": "2026-09-03",
-      "predicted_price": 7003,
-      "change_from_now": 30
+      "predicted_price": 7049,
+      "change_from_now": 0
     },
     {
       "date": "2026-09-04",
-      "predicted_price": 7016,
-      "change_from_now": 43
+      "predicted_price": 7053,
+      "change_from_now": 4
     },
     {
       "date": "2026-09-05",
-      "predicted_price": 7037,
-      "change_from_now": 64
+      "predicted_price": 7047,
+      "change_from_now": -2
     },
     {
       "date": "2026-09-06",
-      "predicted_price": 7026,
-      "change_from_now": 53
+      "predicted_price": 7043,
+      "change_from_now": -6
     },
     {
       "date": "2026-09-07",
-      "predicted_price": 7028,
-      "change_from_now": 55
+      "predicted_price": 7046,
+      "change_from_now": -3
+    },
+    {
+      "date": "2026-09-08",
+      "predicted_price": 7029,
+      "change_from_now": -20
+    },
+    {
+      "date": "2026-09-09",
+      "predicted_price": 7010,
+      "change_from_now": -39
     }
   ]
 }
