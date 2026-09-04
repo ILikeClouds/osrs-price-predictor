@@ -1,8 +1,8 @@
 {
   "item_id": 2,
   "item_name": "Steel cannonball",
-  "generated_at": "2026-09-03T05:26:54Z",
-  "stale_after": "2026-09-04T10:26:54Z",
+  "generated_at": "2026-09-04T05:26:11Z",
+  "stale_after": "2026-09-05T10:26:11Z",
   "regime_start": "2026-07-03",
   "regime_days": 55,
   "model_tier": "Item-specific",
