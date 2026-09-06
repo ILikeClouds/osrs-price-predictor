@@ -1,47 +1,47 @@
 {
   "item_id": 2,
   "item_name": "Steel cannonball",
-  "generated_at": "2026-09-05T05:14:02Z",
-  "stale_after": "2026-09-06T10:14:02Z",
+  "generated_at": "2026-09-06T05:28:16Z",
+  "stale_after": "2026-09-07T10:28:16Z",
   "regime_start": "2026-07-03",
-  "regime_days": 56,
+  "regime_days": 57,
   "model_tier": "Item-specific",
   "current_price": 242,
   "forecast": [
     {
-      "date": "2026-09-04",
-      "predicted_price": 251,
-      "change_from_now": 9
-    },
-    {
       "date": "2026-09-05",
-      "predicted_price": 263,
-      "change_from_now": 21
+      "predicted_price": 249,
+      "change_from_now": 7
     },
     {
       "date": "2026-09-06",
-      "predicted_price": 262,
-      "change_from_now": 20
+      "predicted_price": 259,
+      "change_from_now": 17
     },
     {
       "date": "2026-09-07",
-      "predicted_price": 255,
-      "change_from_now": 13
+      "predicted_price": 257,
+      "change_from_now": 15
     },
     {
       "date": "2026-09-08",
-      "predicted_price": 255,
-      "change_from_now": 13
+      "predicted_price": 257,
+      "change_from_now": 15
     },
     {
       "date": "2026-09-09",
-      "predicted_price": 255,
-      "change_from_now": 13
+      "predicted_price": 257,
+      "change_from_now": 15
     },
     {
       "date": "2026-09-10",
-      "predicted_price": 256,
-      "change_from_now": 14
+      "predicted_price": 257,
+      "change_from_now": 15
+    },
+    {
+      "date": "2026-09-11",
+      "predicted_price": 258,
+      "change_from_now": 16
     }
   ]
 }
