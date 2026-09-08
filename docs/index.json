@@ -1,134 +1,134 @@
 {
-  "generated_at": "2026-09-07T05:40:28Z",
+  "generated_at": "2026-09-08T05:36:08Z",
   "item_count": 16,
   "items": [
     {
       "id": 11804,
       "name": "Bandos godsword",
-      "current_price": 18370074,
+      "current_price": 18331844,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:39:28Z",
-      "stale_after": "2026-09-08T10:39:28Z"
+      "generated_at": "2026-09-08T05:34:56Z",
+      "stale_after": "2026-09-09T10:34:56Z"
     },
     {
       "id": 12695,
       "name": "Super combat potion(4)",
-      "current_price": 12466,
+      "current_price": 12482,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:39:23Z",
-      "stale_after": "2026-09-08T10:39:23Z"
+      "generated_at": "2026-09-08T05:34:57Z",
+      "stale_after": "2026-09-09T10:34:57Z"
     },
     {
       "id": 12934,
       "name": "Zulrah's scales",
-      "current_price": 154,
+      "current_price": 156,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:38:44Z",
-      "stale_after": "2026-09-08T10:38:44Z"
+      "generated_at": "2026-09-08T05:34:22Z",
+      "stale_after": "2026-09-09T10:34:22Z"
     },
     {
       "id": 13441,
       "name": "Anglerfish",
       "current_price": 1810,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:39:20Z",
-      "stale_after": "2026-09-08T10:39:20Z"
+      "generated_at": "2026-09-08T05:34:56Z",
+      "stale_after": "2026-09-09T10:34:56Z"
     },
     {
       "id": 13576,
       "name": "Dragon warhammer",
-      "current_price": 15733080,
+      "current_price": 15972380,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:39:42Z",
-      "stale_after": "2026-09-08T10:39:42Z"
+      "generated_at": "2026-09-08T05:35:05Z",
+      "stale_after": "2026-09-09T10:35:05Z"
     },
     {
       "id": 1513,
       "name": "Magic logs",
-      "current_price": 752,
+      "current_price": 730,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:39:26Z",
-      "stale_after": "2026-09-08T10:39:26Z"
+      "generated_at": "2026-09-08T05:34:59Z",
+      "stale_after": "2026-09-09T10:34:59Z"
     },
     {
       "id": 2,
       "name": "Steel cannonball",
-      "current_price": 244,
+      "current_price": 245,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:38:45Z",
-      "stale_after": "2026-09-08T10:38:45Z"
+      "generated_at": "2026-09-08T05:34:21Z",
+      "stale_after": "2026-09-09T10:34:21Z"
     },
     {
       "id": 20997,
       "name": "Twisted bow",
-      "current_price": 1396715902,
+      "current_price": 1395499242,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:38:45Z",
-      "stale_after": "2026-09-08T10:38:45Z"
+      "generated_at": "2026-09-08T05:34:16Z",
+      "stale_after": "2026-09-09T10:34:16Z"
     },
     {
       "id": 22124,
       "name": "Superior dragon bones",
-      "current_price": 20079,
+      "current_price": 20134,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:39:45Z",
-      "stale_after": "2026-09-08T10:39:45Z"
+      "generated_at": "2026-09-08T05:35:31Z",
+      "stale_after": "2026-09-09T10:35:31Z"
     },
     {
       "id": 3024,
       "name": "Super restore(4)",
-      "current_price": 10206,
+      "current_price": 10216,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:39:13Z",
-      "stale_after": "2026-09-08T10:39:13Z"
+      "generated_at": "2026-09-08T05:34:57Z",
+      "stale_after": "2026-09-09T10:34:57Z"
     },
     {
       "id": 385,
       "name": "Shark",
-      "current_price": 1024,
+      "current_price": 1017,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:39:17Z",
-      "stale_after": "2026-09-08T10:39:17Z"
+      "generated_at": "2026-09-08T05:34:55Z",
+      "stale_after": "2026-09-09T10:34:55Z"
     },
     {
       "id": 536,
       "name": "Dragon bones",
-      "current_price": 3358,
+      "current_price": 3419,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:39:17Z",
-      "stale_after": "2026-09-08T10:39:17Z"
+      "generated_at": "2026-09-08T05:34:53Z",
+      "stale_after": "2026-09-09T10:34:53Z"
     },
     {
       "id": 560,
       "name": "Death rune",
       "current_price": 188,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:38:51Z",
-      "stale_after": "2026-09-08T10:38:51Z"
+      "generated_at": "2026-09-08T05:34:20Z",
+      "stale_after": "2026-09-09T10:34:20Z"
     },
     {
       "id": 562,
       "name": "Chaos rune",
-      "current_price": 105,
+      "current_price": 106,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:39:04Z",
-      "stale_after": "2026-09-08T10:39:04Z"
+      "generated_at": "2026-09-08T05:34:36Z",
+      "stale_after": "2026-09-09T10:34:36Z"
     },
     {
       "id": 565,
       "name": "Blood rune",
-      "current_price": 342,
+      "current_price": 346,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:38:44Z",
-      "stale_after": "2026-09-08T10:38:44Z"
+      "generated_at": "2026-09-08T05:34:18Z",
+      "stale_after": "2026-09-09T10:34:18Z"
     },
     {
       "id": 6685,
       "name": "Saradomin brew(4)",
-      "current_price": 7019,
+      "current_price": 7081,
       "model_tier": "Item-specific",
-      "generated_at": "2026-09-07T05:38:46Z",
-      "stale_after": "2026-09-08T10:38:46Z"
+      "generated_at": "2026-09-08T05:34:19Z",
+      "stale_after": "2026-09-09T10:34:19Z"
     }
   ]
 }
