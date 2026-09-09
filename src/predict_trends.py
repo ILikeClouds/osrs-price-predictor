@@ -16,23 +16,18 @@ import numpy as np
 import os
 import json
 import pickle
-import sys
 import matplotlib
-matplotlib.use('Agg')   # non-interactive backend safe for CI
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import requests
 from datetime import datetime, timezone, timedelta
 from sklearn.ensemble import RandomForestRegressor
-
-# Import adaptive_params so predictions use the same regularised
-# hyperparameters as the training evaluation.
-_src_dir = os.path.dirname(os.path.abspath(__file__))
-if _src_dir not in sys.path:
-    sys.path.insert(0, _src_dir)
-from train_model import adaptive_params
+from sklearn.metrics import mean_absolute_error
 
 MIN_DAYS_FOR_ITEM_MODEL = 45
+MIN_REGIME_ROWS         = 14
+EVAL_WINDOW             = 30   # days held out to measure realized accuracy
 
 RELATIVE_FEATURES = [
     'pct_change_1d', 'pct_change_3d', 'pct_change_7d', 'pct_change_14d',
@@ -43,6 +38,7 @@ RELATIVE_FEATURES = [
     'lag_return_1d', 'lag_return_2d', 'lag_return_3d',
     'lag_return_7d', 'lag_return_14d',
 ]
+
 
 if __name__ == "__main__":
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -65,11 +61,10 @@ if __name__ == "__main__":
     use_global_model = config.get('use_global_model', True)
 
     META_KEYS = {'item_id', 'item_name', 'regime_start', 'regime_days', 'use_global_model'}
-    tuned_params = {k: v for k, v in config.items() if k not in META_KEYS}
-    tuned_params.pop('random_state', None)
-    # Apply the same regime-aware regularisation used during training so that
-    # the model fitted here is identical to the one that was evaluated.
-    model_params = adaptive_params(regime_days, tuned_params)
+    model_params = {k: v for k, v in config.items() if k not in META_KEYS}
+    model_params.pop('random_state', None)
+    if not model_params:
+        model_params = {'n_estimators': 200}
 
     print(f"Item       : {item_name} (ID: {item_id})")
     print(f"Regime     : from {regime_start} ({regime_days} days)")
@@ -97,24 +92,65 @@ if __name__ == "__main__":
         future_rel = pd.read_csv(rel_csv_path)
         X_future   = bundle['scaler'].transform(future_rel[RELATIVE_FEATURES])
         pred_pcts  = bundle['model'].predict(X_future)
-        # Global model predicts % return; convert back to absolute price
         future_predictions = np.round(anchor_prices * (1 + pred_pcts)).astype(int)
 
     # ── Tier 2 — Item-specific model ───────────────────────────────────────
     else:
         if use_global_model and not global_available:
-            print("⚠  Global model or relative features not available — "
-                  "falling back to item-specific model.")
+            print("⚠  Global model not available — falling back to item-specific.")
         tier_label = "Item-specific"
         print(f"Model tier : {tier_label}")
 
-        X_train = train_abs.drop(columns=['target_price_7d', 'date', 'daily_avg_price_raw'])
-        y_train = train_abs['target_price_7d']
-        model   = RandomForestRegressor(**model_params, random_state=42)
-        model.fit(X_train, y_train)
+        feature_cols = [c for c in train_abs.columns
+                        if c not in ('target_price_7d', 'date', 'daily_avg_price_raw')
+                        and not c.startswith('pct_')
+                        and not c.startswith('lag_return')
+                        and c not in RELATIVE_FEATURES
+                        and c != 'target_pct_7d']
 
-        X_future = future_abs.drop(columns=['target_price_7d', 'date', 'daily_avg_price_raw'])
-        # Item-specific model predicts absolute price directly — no anchor needed
+        X_all  = train_abs[feature_cols]
+        y_all  = train_abs['target_price_7d']
+
+        # ── Realized accuracy: hold out last EVAL_WINDOW rows ──────────────
+        realized_accuracy = None
+        if len(train_abs) > EVAL_WINDOW + MIN_REGIME_ROWS:
+            retrain_df = train_abs.iloc[:-EVAL_WINDOW]
+            eval_df    = train_abs.iloc[-EVAL_WINDOW:]
+
+            X_retrain = retrain_df[feature_cols]
+            y_retrain = retrain_df['target_price_7d']
+            X_eval    = eval_df[feature_cols]
+            y_actual  = eval_df['target_price_7d'].values
+            anchors   = eval_df['daily_avg_price_raw'].values
+
+            eval_model = RandomForestRegressor(**model_params, random_state=42)
+            eval_model.fit(X_retrain, y_retrain)
+            y_pred = np.round(eval_model.predict(X_eval)).astype(int)
+
+            mae  = int(np.mean(np.abs(y_pred - y_actual)))
+            mape = float(np.mean(np.abs((y_pred - y_actual) /
+                                        np.where(y_actual == 0, 1, y_actual))) * 100)
+            # Directional: did model predict the correct up/down direction?
+            pred_dir   = np.sign(y_pred   - anchors)
+            actual_dir = np.sign(y_actual - anchors)
+            direction  = float(np.mean(pred_dir == actual_dir) * 100)
+
+            realized_accuracy = {
+                "eval_window_days": EVAL_WINDOW,
+                "mae_gp":           mae,
+                "mape_pct":         round(mape, 2),
+                "directional_pct":  round(direction, 1),
+            }
+            print(f"Realized accuracy ({EVAL_WINDOW}-day holdout): "
+                  f"MAE={mae:,} GP | MAPE={mape:.2f}% | Direction={direction:.1f}%")
+        else:
+            print(f"Not enough rows ({len(train_abs)}) for holdout evaluation.")
+
+        # ── Train on full data for actual forecast ─────────────────────────
+        model = RandomForestRegressor(**model_params, random_state=42)
+        model.fit(X_all, y_all)
+
+        X_future = future_abs[feature_cols]
         future_predictions = np.round(model.predict(X_future)).astype(int)
 
     # ── Print forecast ─────────────────────────────────────────────────────
@@ -145,22 +181,20 @@ if __name__ == "__main__":
     pred_dates  = [last_date] + future_dates.tolist()
     pred_prices = [last_price] + future_predictions.tolist()
 
-    # ── Write prediction JSON to output/ ───────────────────────────────────
-    # The workflow uploads output/*.json as an artifact and the commit-results
-    # job downloads everything into docs/predictions/ — one fresh file per job,
-    # no stale files from the repo checkout get mixed in.
+    # ── Write prediction JSON ──────────────────────────────────────────────
     now_utc     = datetime.now(timezone.utc)
     stale_after = (now_utc + timedelta(hours=29)).strftime('%Y-%m-%dT%H:%M:%SZ')
 
     prediction_doc = {
-        "item_id":       item_id,
-        "item_name":     item_name,
-        "generated_at":  now_utc.strftime('%Y-%m-%dT%H:%M:%SZ'),
-        "stale_after":   stale_after,
-        "regime_start":  regime_start,
-        "regime_days":   regime_days,
-        "model_tier":    tier_label,
-        "current_price": last_price,
+        "item_id":            item_id,
+        "item_name":          item_name,
+        "generated_at":       now_utc.strftime('%Y-%m-%dT%H:%M:%SZ'),
+        "stale_after":        stale_after,
+        "regime_start":       regime_start,
+        "regime_days":        regime_days,
+        "model_tier":         tier_label,
+        "current_price":      last_price,
+        "realized_accuracy":  realized_accuracy if tier_label == "Item-specific" else None,
         "forecast": [
             {
                 "date":            d.strftime('%Y-%m-%d'),
@@ -189,6 +223,18 @@ if __name__ == "__main__":
                    linewidth=1.5, alpha=0.7, label=f'Regime Start ({regime_start})')
 
     ax.axvspan(last_date, pred_dates[-1], alpha=0.05, color='blue')
+
+    # Annotate with accuracy metrics if available
+    if realized_accuracy:
+        ax.annotate(
+            f"Holdout accuracy ({realized_accuracy['eval_window_days']}d):\n"
+            f"  MAE: {realized_accuracy['mae_gp']:,} GP\n"
+            f"  MAPE: {realized_accuracy['mape_pct']:.2f}%\n"
+            f"  Direction: {realized_accuracy['directional_pct']:.1f}%",
+            xy=(0.02, 0.97), xycoords='axes fraction',
+            fontsize=8, va='top',
+            bbox=dict(boxstyle='round,pad=0.4', fc='lightyellow', alpha=0.85)
+        )
 
     if tier_label == "Global":
         ax.annotate(
