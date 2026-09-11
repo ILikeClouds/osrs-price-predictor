@@ -1,53 +1,53 @@
 {
   "item_id": 13441,
   "item_name": "Anglerfish",
-  "generated_at": "2026-09-10T05:33:31Z",
-  "stale_after": "2026-09-11T10:33:31Z",
+  "generated_at": "2026-09-11T05:36:29Z",
+  "stale_after": "2026-09-12T10:36:29Z",
   "regime_start": "2026-07-05",
-  "regime_days": 59,
+  "regime_days": 61,
   "model_tier": "Item-specific",
-  "current_price": 1772,
+  "current_price": 1743,
   "realized_accuracy": {
     "eval_window_days": 30,
-    "mae_gp": 490,
-    "mape_pct": 26.47,
-    "directional_pct": 30.0
+    "mae_gp": 500,
+    "mape_pct": 27.16,
+    "directional_pct": 23.3
   },
   "forecast": [
     {
-      "date": "2026-09-09",
-      "predicted_price": 1818,
-      "change_from_now": 46
-    },
-    {
-      "date": "2026-09-10",
-      "predicted_price": 1821,
-      "change_from_now": 49
-    },
-    {
       "date": "2026-09-11",
-      "predicted_price": 1836,
-      "change_from_now": 64
+      "predicted_price": 1794,
+      "change_from_now": 51
     },
     {
       "date": "2026-09-12",
-      "predicted_price": 1818,
-      "change_from_now": 46
+      "predicted_price": 1784,
+      "change_from_now": 41
     },
     {
       "date": "2026-09-13",
-      "predicted_price": 1807,
-      "change_from_now": 35
+      "predicted_price": 1779,
+      "change_from_now": 36
     },
     {
       "date": "2026-09-14",
-      "predicted_price": 1814,
-      "change_from_now": 42
+      "predicted_price": 1784,
+      "change_from_now": 41
     },
     {
       "date": "2026-09-15",
-      "predicted_price": 1835,
-      "change_from_now": 63
+      "predicted_price": 1799,
+      "change_from_now": 56
+    },
+    {
+      "date": "2026-09-16",
+      "predicted_price": 1797,
+      "change_from_now": 54
+    },
+    {
+      "date": "2026-09-17",
+      "predicted_price": 1789,
+      "change_from_now": 46
     }
   ]
 }
