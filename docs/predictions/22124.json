@@ -1,48 +1,48 @@
 {
   "item_id": 22124,
   "item_name": "Superior dragon bones",
-  "generated_at": "2026-09-13T05:39:15Z",
-  "stale_after": "2026-09-14T10:39:15Z",
-  "regime_start": "2026-08-05",
-  "regime_days": 31,
+  "generated_at": "2026-09-14T05:45:17Z",
+  "stale_after": "2026-09-15T10:45:17Z",
+  "regime_start": "2026-08-23",
+  "regime_days": 14,
   "model_tier": "Item-specific",
-  "current_price": 20228,
+  "current_price": 20491,
   "realized_accuracy": null,
   "forecast": [
     {
-      "date": "2026-09-12",
-      "predicted_price": 20129,
-      "change_from_now": -99
-    },
-    {
       "date": "2026-09-13",
-      "predicted_price": 20098,
-      "change_from_now": -130
+      "predicted_price": 20337,
+      "change_from_now": -154
     },
     {
       "date": "2026-09-14",
-      "predicted_price": 20095,
-      "change_from_now": -133
+      "predicted_price": 20324,
+      "change_from_now": -167
     },
     {
       "date": "2026-09-15",
-      "predicted_price": 20098,
-      "change_from_now": -130
+      "predicted_price": 20337,
+      "change_from_now": -154
     },
     {
       "date": "2026-09-16",
-      "predicted_price": 20096,
-      "change_from_now": -132
+      "predicted_price": 20335,
+      "change_from_now": -156
     },
     {
       "date": "2026-09-17",
-      "predicted_price": 20098,
-      "change_from_now": -130
+      "predicted_price": 20335,
+      "change_from_now": -156
     },
     {
       "date": "2026-09-18",
-      "predicted_price": 20096,
-      "change_from_now": -132
+      "predicted_price": 20336,
+      "change_from_now": -155
+    },
+    {
+      "date": "2026-09-19",
+      "predicted_price": 20346,
+      "change_from_now": -145
     }
   ]
 }
