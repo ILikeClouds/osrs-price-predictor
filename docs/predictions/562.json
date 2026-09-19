@@ -1,10 +1,10 @@
 {
   "item_id": 562,
   "item_name": "Chaos rune",
-  "generated_at": "2026-09-18T05:31:39Z",
-  "stale_after": "2026-09-19T10:31:39Z",
+  "generated_at": "2026-09-19T05:28:38Z",
+  "stale_after": "2026-09-20T10:28:38Z",
   "regime_start": "2026-03-26",
-  "regime_days": 168,
+  "regime_days": 169,
   "model_tier": "Item-specific",
   "current_price": 105,
   "realized_accuracy": {
@@ -15,19 +15,14 @@
   },
   "forecast": [
     {
-      "date": "2026-09-17",
-      "predicted_price": 106,
-      "change_from_now": 1
-    },
-    {
       "date": "2026-09-18",
       "predicted_price": 105,
       "change_from_now": 0
     },
     {
       "date": "2026-09-19",
-      "predicted_price": 106,
-      "change_from_now": 1
+      "predicted_price": 105,
+      "change_from_now": 0
     },
     {
       "date": "2026-09-20",
@@ -46,6 +41,11 @@
     },
     {
       "date": "2026-09-23",
+      "predicted_price": 105,
+      "change_from_now": 0
+    },
+    {
+      "date": "2026-09-24",
       "predicted_price": 105,
       "change_from_now": 0
     }
