@@ -1,53 +1,53 @@
 {
   "item_id": 20997,
   "item_name": "Twisted bow",
-  "generated_at": "2026-09-19T05:28:21Z",
-  "stale_after": "2026-09-20T10:28:21Z",
+  "generated_at": "2026-09-20T05:41:25Z",
+  "stale_after": "2026-09-21T10:41:25Z",
   "regime_start": "2026-07-28",
-  "regime_days": 45,
+  "regime_days": 47,
   "model_tier": "Item-specific",
-  "current_price": 1396361630,
+  "current_price": 1396507820,
   "realized_accuracy": {
     "eval_window_days": 30,
-    "mae_gp": 55843526,
-    "mape_pct": 4.01,
-    "directional_pct": 53.3
+    "mae_gp": 53321084,
+    "mape_pct": 3.82,
+    "directional_pct": 50.0
   },
   "forecast": [
     {
-      "date": "2026-09-18",
-      "predicted_price": 1395902058,
-      "change_from_now": -459572
-    },
-    {
-      "date": "2026-09-19",
-      "predicted_price": 1395504981,
-      "change_from_now": -856649
-    },
-    {
       "date": "2026-09-20",
-      "predicted_price": 1395428452,
-      "change_from_now": -933178
+      "predicted_price": 1395944552,
+      "change_from_now": -563268
     },
     {
       "date": "2026-09-21",
-      "predicted_price": 1395945067,
-      "change_from_now": -416563
+      "predicted_price": 1396389319,
+      "change_from_now": -118501
     },
     {
       "date": "2026-09-22",
-      "predicted_price": 1395729388,
-      "change_from_now": -632242
+      "predicted_price": 1396259635,
+      "change_from_now": -248185
     },
     {
       "date": "2026-09-23",
-      "predicted_price": 1395891508,
-      "change_from_now": -470122
+      "predicted_price": 1396151426,
+      "change_from_now": -356394
     },
     {
       "date": "2026-09-24",
-      "predicted_price": 1395434842,
-      "change_from_now": -926788
+      "predicted_price": 1395811136,
+      "change_from_now": -696684
+    },
+    {
+      "date": "2026-09-25",
+      "predicted_price": 1396132605,
+      "change_from_now": -375215
+    },
+    {
+      "date": "2026-09-26",
+      "predicted_price": 1395777444,
+      "change_from_now": -730376
     }
   ]
 }
