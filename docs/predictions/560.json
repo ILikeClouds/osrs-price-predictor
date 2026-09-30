@@ -1,8 +1,8 @@
 {
   "item_id": 560,
   "item_name": "Death rune",
-  "generated_at": "2026-09-29T06:33:28Z",
-  "stale_after": "2026-09-30T11:33:28Z",
+  "generated_at": "2026-09-30T06:16:12Z",
+  "stale_after": "2026-10-01T11:16:12Z",
   "regime_start": "2026-07-02",
   "regime_days": 82,
   "model_tier": "Item-specific",
@@ -10,7 +10,7 @@
   "realized_accuracy": {
     "eval_window_days": 30,
     "mae_gp": 2,
-    "mape_pct": 1.1,
+    "mape_pct": 1.07,
     "directional_pct": 46.7
   },
   "forecast": [
