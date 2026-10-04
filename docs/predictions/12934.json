@@ -1,53 +1,53 @@
 {
   "item_id": 12934,
   "item_name": "Zulrah's scales",
-  "generated_at": "2026-10-03T05:59:50Z",
-  "stale_after": "2026-10-04T10:59:50Z",
+  "generated_at": "2026-10-04T06:36:17Z",
+  "stale_after": "2026-10-05T11:36:17Z",
   "regime_start": "2026-07-02",
-  "regime_days": 85,
+  "regime_days": 86,
   "model_tier": "Item-specific",
-  "current_price": 158,
+  "current_price": 156,
   "realized_accuracy": {
     "eval_window_days": 30,
-    "mae_gp": 8,
-    "mape_pct": 5.18,
+    "mae_gp": 6,
+    "mape_pct": 4.48,
     "directional_pct": 43.3
   },
   "forecast": [
     {
-      "date": "2026-10-02",
-      "predicted_price": 158,
-      "change_from_now": 0
-    },
-    {
       "date": "2026-10-03",
-      "predicted_price": 158,
-      "change_from_now": 0
+      "predicted_price": 157,
+      "change_from_now": 1
     },
     {
       "date": "2026-10-04",
-      "predicted_price": 158,
-      "change_from_now": 0
+      "predicted_price": 157,
+      "change_from_now": 1
     },
     {
       "date": "2026-10-05",
-      "predicted_price": 158,
-      "change_from_now": 0
+      "predicted_price": 157,
+      "change_from_now": 1
     },
     {
       "date": "2026-10-06",
-      "predicted_price": 158,
-      "change_from_now": 0
+      "predicted_price": 157,
+      "change_from_now": 1
     },
     {
       "date": "2026-10-07",
-      "predicted_price": 158,
-      "change_from_now": 0
+      "predicted_price": 157,
+      "change_from_now": 1
     },
     {
       "date": "2026-10-08",
       "predicted_price": 158,
-      "change_from_now": 0
+      "change_from_now": 2
+    },
+    {
+      "date": "2026-10-09",
+      "predicted_price": 157,
+      "change_from_now": 1
     }
   ]
 }
