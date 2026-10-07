@@ -1,24 +1,19 @@
 {
   "item_id": 560,
   "item_name": "Death rune",
-  "generated_at": "2026-10-06T07:08:59Z",
-  "stale_after": "2026-10-07T12:08:59Z",
+  "generated_at": "2026-10-07T06:49:22Z",
+  "stale_after": "2026-10-08T11:49:22Z",
   "regime_start": "2026-07-02",
-  "regime_days": 89,
+  "regime_days": 90,
   "model_tier": "Item-specific",
   "current_price": 190,
   "realized_accuracy": {
     "eval_window_days": 30,
     "mae_gp": 2,
-    "mape_pct": 1.07,
+    "mape_pct": 1.1,
     "directional_pct": 56.7
   },
   "forecast": [
-    {
-      "date": "2026-10-06",
-      "predicted_price": 190,
-      "change_from_now": 0
-    },
     {
       "date": "2026-10-07",
       "predicted_price": 189,
@@ -41,11 +36,16 @@
     },
     {
       "date": "2026-10-11",
-      "predicted_price": 184,
-      "change_from_now": -6
+      "predicted_price": 183,
+      "change_from_now": -7
     },
     {
       "date": "2026-10-12",
+      "predicted_price": 182,
+      "change_from_now": -8
+    },
+    {
+      "date": "2026-10-13",
       "predicted_price": 182,
       "change_from_now": -8
     }
