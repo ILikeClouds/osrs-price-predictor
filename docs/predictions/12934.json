@@ -1,48 +1,48 @@
 {
   "item_id": 12934,
   "item_name": "Zulrah's scales",
-  "generated_at": "2026-10-14T05:45:29Z",
-  "stale_after": "2026-10-15T10:45:29Z",
-  "regime_start": "2026-09-05",
+  "generated_at": "2026-10-15T05:31:27Z",
+  "stale_after": "2026-10-16T10:31:27Z",
+  "regime_start": "2026-09-06",
   "regime_days": 31,
   "model_tier": "Item-specific",
-  "current_price": 153,
+  "current_price": 154,
   "realized_accuracy": null,
   "forecast": [
     {
-      "date": "2026-10-13",
-      "predicted_price": 154,
-      "change_from_now": 1
-    },
-    {
       "date": "2026-10-14",
       "predicted_price": 154,
-      "change_from_now": 1
+      "change_from_now": 0
     },
     {
       "date": "2026-10-15",
       "predicted_price": 154,
-      "change_from_now": 1
+      "change_from_now": 0
     },
     {
       "date": "2026-10-16",
       "predicted_price": 154,
-      "change_from_now": 1
+      "change_from_now": 0
     },
     {
       "date": "2026-10-17",
       "predicted_price": 154,
-      "change_from_now": 1
+      "change_from_now": 0
     },
     {
       "date": "2026-10-18",
       "predicted_price": 154,
-      "change_from_now": 1
+      "change_from_now": 0
     },
     {
       "date": "2026-10-19",
-      "predicted_price": 155,
-      "change_from_now": 2
+      "predicted_price": 154,
+      "change_from_now": 0
+    },
+    {
+      "date": "2026-10-20",
+      "predicted_price": 154,
+      "change_from_now": 0
     }
   ]
 }
