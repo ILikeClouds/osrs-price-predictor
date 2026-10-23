@@ -4,23 +4,20 @@ date,item,mae,rmse,r2,naive_mae,improvement_pct,steps,regime_start
 2026-05-02,Dragon bones,Item-specific,8.57,10.73,0.9924,37,91,2026-01-24
 2026-05-02,Dragon bones,Item-specific,8.57,10.73,0.9924,37,91,2026-01-24
 2026-05-02,Dragon bones,Item-specific,9.27,11.49,0.9912,37,91,2026-01-24
-2026-10-22,Magic logs,Item-specific,14.37,18.97,0.4624,8,18,2026-09-26
--13
-26-09-13
-
-2026-10-22,Bandos godsword,Item-specific,399673.78,829818.19,-0.112,13,31,2026-09-13
-2026-10-22,Super combat potion(4),Item-specific,126.26,144.99,0.5883,13,31,2026-09-13
-2026-10-22,Zulrah's scales,Item-specific,1.47,2.45,0.4991,13,31,2026-09-13
-2026-10-22,Anglerfish,Item-specific,51.71,82.79,0.2863,13,31,2026-09-14
-2026-10-22,Dragon warhammer,Item-specific,568124.18,775686.87,-0.2194,13,31,2026-09-13
-2026-10-22,Magic logs,Item-specific,14.37,18.97,0.4624,8,18,2026-09-26
-2026-10-22,Steel cannonball,Item-specific,10.71,14.61,0.7219,13,31,2026-09-13
-2026-10-22,Twisted bow,Item-specific,13240791.97,20691068.49,0.4233,13,31,2026-09-13
-2026-10-22,Superior dragon bones,Item-specific,890.81,1044.29,-0.1564,13,31,2026-09-13
-2026-10-22,Super restore(4),Item-specific,194.84,257.2,0.1912,13,31,2026-09-13
-2026-10-22,Shark,Item-specific,18.41,23.2,0.1272,13,31,2026-09-13
-2026-10-22,Dragon bones,Item-specific,77.39,174.51,-0.0456,13,31,2026-09-13
-2026-10-22,Death rune,Item-specific,3.96,7.15,-0.0603,13,31,2026-09-13
-2026-10-22,Chaos rune,Item-specific,0.88,1.74,-0.0163,13,31,2026-09-13
-2026-10-22,Blood rune,Item-specific,5.14,6.4,-0.0152,13,31,2026-09-13
-2026-10-22,Saradomin brew(4),Item-specific,56.27,82.43,0.0247,13,31,2026-09-13
+2026-10-23,Super combat potion(4),Item-specific,145.83,179.86,0.5427,13,31,2026-09-15
+2026-10-23,Bandos godsword,Item-specific,1051163.28,1928699.5,0.0793,13,31,2026-09-15
+2026-10-23,Super combat potion(4),Item-specific,145.83,179.86,0.5427,13,31,2026-09-15
+2026-10-23,Zulrah's scales,Item-specific,3.63,6.37,0.0852,13,31,2026-09-15
+2026-10-23,Anglerfish,Item-specific,55.21,84.63,0.1393,13,31,2026-09-15
+2026-10-23,Dragon warhammer,Item-specific,691151.49,1047539.02,-0.0395,13,31,2026-09-15
+2026-10-23,Magic logs,Item-specific,26.9,34.7,0.0118,13,31,2026-09-15
+2026-10-23,Steel cannonball,Item-specific,13.48,19.53,0.6655,13,31,2026-09-15
+2026-10-23,Twisted bow,Item-specific,21462074.94,33085169.72,0.4299,13,31,2026-09-15
+2026-10-23,Superior dragon bones,Item-specific,776.42,998.9,0.1319,13,31,2026-09-15
+2026-10-23,Super restore(4),Item-specific,300.39,461.99,0.449,13,31,2026-09-15
+2026-10-23,Shark,Item-specific,27.07,34.5,0.3492,13,31,2026-09-15
+2026-10-23,Dragon bones,Item-specific,141.42,249.66,0.1208,13,31,2026-09-15
+2026-10-23,Death rune,Item-specific,8.16,14.37,0.1951,13,31,2026-09-15
+2026-10-23,Chaos rune,Item-specific,3.76,7.74,0.1476,13,31,2026-09-15
+2026-10-23,Blood rune,Item-specific,9.46,13.06,0.0119,13,31,2026-09-15
+2026-10-23,Saradomin brew(4),Item-specific,101.35,152.34,0.3568,13,31,2026-09-15
