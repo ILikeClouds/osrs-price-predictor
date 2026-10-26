@@ -1,48 +1,48 @@
 {
   "item_id": 1513,
   "item_name": "Magic logs",
-  "generated_at": "2026-10-25T05:38:54Z",
-  "stale_after": "2026-10-26T10:38:54Z",
-  "regime_start": "2026-09-16",
+  "generated_at": "2026-10-26T05:45:21Z",
+  "stale_after": "2026-10-27T10:45:21Z",
+  "regime_start": "2026-09-17",
   "regime_days": 31,
   "model_tier": "Item-specific",
-  "current_price": 609,
+  "current_price": 621,
   "realized_accuracy": null,
   "forecast": [
     {
-      "date": "2026-10-24",
-      "predicted_price": 630,
-      "change_from_now": 21
-    },
-    {
       "date": "2026-10-25",
-      "predicted_price": 629,
-      "change_from_now": 20
+      "predicted_price": 626,
+      "change_from_now": 5
     },
     {
       "date": "2026-10-26",
-      "predicted_price": 626,
-      "change_from_now": 17
+      "predicted_price": 624,
+      "change_from_now": 3
     },
     {
       "date": "2026-10-27",
-      "predicted_price": 621,
-      "change_from_now": 12
+      "predicted_price": 622,
+      "change_from_now": 1
     },
     {
       "date": "2026-10-28",
-      "predicted_price": 620,
-      "change_from_now": 11
+      "predicted_price": 621,
+      "change_from_now": 0
     },
     {
       "date": "2026-10-29",
-      "predicted_price": 620,
-      "change_from_now": 11
+      "predicted_price": 621,
+      "change_from_now": 0
     },
     {
       "date": "2026-10-30",
-      "predicted_price": 620,
-      "change_from_now": 11
+      "predicted_price": 621,
+      "change_from_now": 0
+    },
+    {
+      "date": "2026-10-31",
+      "predicted_price": 621,
+      "change_from_now": 0
     }
   ]
 }
