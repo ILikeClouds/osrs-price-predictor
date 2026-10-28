@@ -1,48 +1,48 @@
 {
   "item_id": 385,
   "item_name": "Shark",
-  "generated_at": "2026-10-27T05:57:52Z",
-  "stale_after": "2026-10-28T10:57:52Z",
-  "regime_start": "2026-09-19",
+  "generated_at": "2026-10-28T06:36:19Z",
+  "stale_after": "2026-10-29T11:36:19Z",
+  "regime_start": "2026-09-20",
   "regime_days": 31,
   "model_tier": "Item-specific",
-  "current_price": 789,
+  "current_price": 786,
   "realized_accuracy": null,
   "forecast": [
     {
-      "date": "2026-10-27",
-      "predicted_price": 826,
-      "change_from_now": 37
-    },
-    {
       "date": "2026-10-28",
-      "predicted_price": 825,
-      "change_from_now": 36
+      "predicted_price": 809,
+      "change_from_now": 23
     },
     {
       "date": "2026-10-29",
-      "predicted_price": 825,
-      "change_from_now": 36
+      "predicted_price": 812,
+      "change_from_now": 26
     },
     {
       "date": "2026-10-30",
-      "predicted_price": 824,
-      "change_from_now": 35
+      "predicted_price": 812,
+      "change_from_now": 26
     },
     {
       "date": "2026-10-31",
-      "predicted_price": 824,
-      "change_from_now": 35
+      "predicted_price": 813,
+      "change_from_now": 27
     },
     {
       "date": "2026-11-01",
-      "predicted_price": 825,
-      "change_from_now": 36
+      "predicted_price": 810,
+      "change_from_now": 24
     },
     {
       "date": "2026-11-02",
-      "predicted_price": 823,
-      "change_from_now": 34
+      "predicted_price": 810,
+      "change_from_now": 24
+    },
+    {
+      "date": "2026-11-03",
+      "predicted_price": 809,
+      "change_from_now": 23
     }
   ]
 }
